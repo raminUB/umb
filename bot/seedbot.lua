@@ -326,109 +326,66 @@ This command will send text to [group_id]
 ]],
     help_text = [[
 Commands list :
+❗.️id ( هم یوزر نیم و هم ایدی عددی شخص)
 
-!kick [username|id]
-You can also do it by reply
+!kick (reply) [ @username|id]  حذف شخص با ریپلی و ایدی
 
-!ban [ username|id]
-You can also do it by reply
+!ban (reply) [ @username|id] مسدود کردن با ریپلی و ایدی
 
-!unban [id]
-You can also do it by reply
+!unban (reply) [id] صلب مسدودیت فرد مسدود شده
 
-!who
-Members list
+!who ارائه مشخصات افراد در گروه
 
-!modlist
-Moderators list
+!modlist فهرست مدیران
 
-!promote [username]
-Promote someone
+!promote   [ @username ] برای برگذیدن مدیریت گروه
 
-!demote [username]
-Demote someone
+!demote (reply) [username] صلب از مدیریت یه شخص
 
-!kickme
-Will kick user
+!kickme برای حذف خود از گروه
 
-!about
-Group description
+!about معرفی گروه
 
-!setphoto
-Set and locks group photo
+!setphoto گذاشتن عکس برای گروه
 
-!setname [name]
-Set group name
+!setname [name] گذاشتن اسم برای گروه
 
-!rules
-Group rules
+!rules قوانین 
 
-!id
-return group id or user id
+!id (reply) ایدی عددی گروه و باریپلی روی فردی ایدی عددی فرد 
 
-!help
+!lock [member|name|bots|leave] محدود کردن هر یک
 
-!lock [member|name|bots|leave]	
-Locks [member|name|bots|leaveing] 
+!unlock [member|name|bots|leave] لغو مخدودیت هر یک
 
-!unlock [member|name|bots|leave]
-Unlocks [member|name|bots|leaving]
+!set rules <text> گذاشتن قوانین
 
-!set rules <text>
-Set <text> as rules
+!set about <text> گذاشتن معرف گروه
 
-!set about <text>
-Set <text> as about
+!settings تنظیمات گروه
 
-!settings
-Returns group settings
+!newlink نشاندن لینک جدید 
 
-!newlink
-create/revoke your group link
+!link اخذ لینک مربوط به گروه
 
-!link
-returns group link
+!owner دانستن صاحب گروه
 
-!owner
-returns group owner id
+!setflood [value] تنظیم حساسیت ربات به تعداد
+پیام ها
+!stats مشخصات کلی
 
-!setowner [id]
-Will set id as owner
+!save [value] <text> ذخیره کردن متن در ربات
 
-!setflood [value]
-Set [value] as flood sensitivity
+!get [value] گرفتن متن ذخیره شده
 
-!stats
-Simple message statistics
+!clean [modlist|rules|about] پاک کردن هر یک
 
-!save [value] <text>
-Save <text> as [value]
+!res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
 
-!get [value]
-Returns text of [value]
+!log امار
 
-!clean [modlist|rules|about]
-Will clear [modlist|rules|about] and set it to nil
-
-!res [username]
-returns user id
-"!res @username"
-
-!log
-will return group logs
-
-!banlist
-will return group ban list
-
-**U can use both "/" and "!" 
-
-
-*Only owner and mods can add bots in group
-
-
-*Only moderators and owner can use kick,ban,unban,newlink,link,setphoto,setname,lock,unlock,set rules,set about and settings commands
-
-*Only owner can use res,setowner,promote,demote and log commands
+!banlist فهرست افراد مسدود شده
+قبل از دادن دستور حتما از / یا ! استفاده کنید
 
 ]]
   }
