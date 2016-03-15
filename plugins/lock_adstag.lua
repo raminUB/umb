@@ -1,6 +1,6 @@
 local function run(msg)   
     local data = load_data(_config.moderation.data)   
-     if data[tostring(msg.to.id)]['settings']['lock_ads'] == 'yes' then
+     if data[tostring(msg.to.id)]['settings']['lock_adstag'] == 'yes' then
 if not is_momod(msg) then
     send_large_msg(get_receiver(msg), "User @" .. msg.from.username .. " AdsTag is not allowed here!")
     chat_del_user('chat#id'..msg.to.id, 'user#id'..msg.from.id, ok_cb, true)
