@@ -232,7 +232,7 @@ local function show_group_settingsmod(msg, data, target)
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n🔹Lock group name : "..settings.lock_name.."\n🔹Lock group photo : "..settings.lock_photo.."\n🔹Lock group member : "..settings.lock_member.."\n🔹Lock group join : "..settings.lock_join.."\n🔹Lock group ads(link) : "..settings.lock_adslink.."\n🔹Lock group adstag : "..settings.lock_adstag.."\n🔹Lock group leave : "..leave_ban.."\n🔹Flood sensitivity : "..NUM_MSG_MAX.."\n🔹Bot protection : "..bots_protection--"\nPublic: "..public
+  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group adstag : "..settings.lock_adstag.."\n<>Lock group leave : "..leave_ban.."\n<>Flood sensitivity : "..NUM_MSG_MAX.."\n<>Bot protection : "..bots_protection--"\nPublic: "..public
   return text
 end
 
@@ -246,7 +246,6 @@ local function set_descriptionmod(msg, data, target, about)
   return 'Set group description to:\n'..about
 end
 local function get_description(msg, data)
-  local data_cat = 'description'
   if not data[tostring(msg.to.id)][data_cat] then
     return 'No description available.'
   end
@@ -254,20 +253,74 @@ local function get_description(msg, data)
   local about = string.gsub(msg.to.print_name, "_", " ")..':\n\n'..about
   return 'About '..about
 end
+
+ local function lock_group_adstag(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_adstag_lock = data[tostring(target)]['settings']['lock_adstag']
+  if group_adstag_lock == 'yes' then
+    return 'Group adstag is already allocked'
+  else
+    data[tostring(target)]['settings']['lock_adstag'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group adstag has been locked'
+  end
+end
+local function unlock_group_adstag(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_adstag_lock = data[tostring(target)]['settings']['lock_adstag']
+  if group_adstag_lock == 'no' then
+    return 'Group adstag is not locked'
+  else
+    data[tostring(target)]['settings']['lock_adstag'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group adstag has been unlocked'
+  end
+end
+
+  local function lock_group_adslink(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_adslink_lock = data[tostring(target)]['settings']['lock_adslink']
+  if group_adslink_lock == 'yes' then
+    return 'Group adslink is already allocked'
+  else
+    data[tostring(target)]['settings']['lock_adslink'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group adslink has been locked'
+  end
+end
+local function unlock_group_adslink(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_adslink_lock = data[tostring(target)]['settings']['lock_adslink']
+  if group_adslink_lock == 'no' then
+    return 'Group adslinkjoin is not locked'
+  else
+    data[tostring(target)]['settings']['lock_adslink'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group adslink has been unlocked'
+  end
+end
+  
 local function lock_group_join(msg, data, target)
   if not is_momod(msg) then
     return "Only moderators can do it for now"
   end
   local group_join_lock = data[tostring(target)]['settings']['lock_join']
   if group_join_lock == 'yes' then
-    return 'Group join is locked'
+    return 'Group join is already locked'
   else
     data[tostring(target)]['settings']['lock_join'] = 'yes'
     save_data(_config.moderation.data, data)
     return 'Group join has been locked'
   end
 end
-
 local function unlock_group_join(msg, data, target)
   if not is_momod(msg) then
     return "Only moderators can do it for now"
