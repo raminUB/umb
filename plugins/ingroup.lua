@@ -13,6 +13,8 @@ local function check_member_autorealm(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_adstag = 'no',
+          lock_adslink = 'no',
           lock_join = 'no',
           lock_bot = 'yes',
           lock_name = 'yes',
@@ -45,6 +47,8 @@ local function check_member_realm_add(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_adstag = 'no',
+          lock_adslink = 'no',
           lock_join = 'no',
           lock_bot = 'yes',
           lock_name = 'yes',
@@ -79,6 +83,8 @@ function check_member_group(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_adstag = 'no',
+          lock_adslink = 'no',
           lock_join = 'no',
           lock_bot = 'yes',
           lock_name = 'yes',
@@ -113,6 +119,8 @@ local function check_member_modadd(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_adstag = 'no',
+          lock_adslink = 'no',
           lock_join = 'no',
           lock_bot = 'yes',
           lock_name = 'yes',
@@ -191,8 +199,8 @@ local function check_member_modrem(cb_extra, success, result)
 end
 --End Check Member
 local function show_group_settingsmod(msg, data, target)
- 	if not is_momod(msg) then
-    	return "For moderators only!"
+ 	if not is_realm(msg) then
+    	return msg
   	end
   	local data = load_data(_config.moderation.data)
     if data[tostring(msg.to.id)] then
@@ -211,12 +219,20 @@ local function show_group_settingsmod(msg, data, target)
     if data[tostring(msg.to.id)]['settings']['lock_join'] then
     	lock_join = data[tostring(msg.to.id)]['settings']['lock_join']
    	end
+   	local lock_adslink = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_adslink'] then
+    	lock_adslink = data[tostring(msg.to.id)]['settings']['lock_adslink']
+   	end
+   	local lock_adstag = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_adstag'] then
+    	lock_adstag = data[tostring(msg.to.id)]['settings']['lock_adstag']
+   	end
     local leave_ban = "no"
     if data[tostring(msg.to.id)]['settings']['leave_ban'] then
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#group id : ("..msg.to.id.. ") \n#your id : (" ..msg.from.id.. ") \nLock group name : "..settings.lock_name.."\nLock group photo : "..settings.lock_photo.."\nLock group member : "..settings.lock_member.."\nLock group join : "..settings.lock_join.."\nLock group leave : "..leave_ban.."\nflood sensitivity : "..NUM_MSG_MAX.."\nBot protection : "..bots_protection--"\nPublic: "..public
+  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n🔹Lock group name : "..settings.lock_name.."\n🔹Lock group photo : "..settings.lock_photo.."\n🔹Lock group member : "..settings.lock_member.."\n🔹Lock group join : "..settings.lock_join.."\n🔹Lock group ads(link) : "..settings.lock_adslink.."\n🔹Lock group adstag : "..settings.lock_adstag.."\n🔹Lock group leave : "..leave_ban.."\n🔹Flood sensitivity : "..NUM_MSG_MAX.."\n🔹Bot protection : "..bots_protection--"\nPublic: "..public
   return text
 end
 
