@@ -20,20 +20,21 @@ local function pre_process(msg)
       local user_id = msg.action.user.id
       print('Checking invited user '..user_id)
       local banned = is_banned(user_id, msg.to.id)
-      if banned or is_gbanned(user_id) then -- Check it with redis
+      if banned or is_gbanned(user_id) then
+        send_large_msg(get_receiver(msg), "You".." is banned or globaly banned!,you need to help us and request to @ub_sup_bot.")
         print('User is banned!')
         local name = user_print_name(msg.from)
-        savelog(msg.to.id, name.." ["..msg.from.id.."] added a banned user >"..msg.action.user.id)-- Save to logs
+         savelog(msg.to.id, name.." ["..msg.from.id.."] added a banned user >"..msg.action.user.id)-- Save to logs
         kick_user(user_id, msg.to.id)
         local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
         redis:incr(banhash)
         local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
         local banaddredis = redis:get(banhash) 
         if banaddredis then 
-          if tonumber(banaddredis) == 4 and not is_owner(msg) then 
+          if tonumber(banaddredis) == 2 and not is_owner(msg) then 
             kick_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 3 times
           end
-          if tonumber(banaddredis) ==  8 and not is_owner(msg) then 
+          if tonumber(banaddredis) == 3 and not is_owner(msg) then 
             ban_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 7 times
             local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
             redis:set(banhash, 0)-- Reset the Counter
@@ -48,10 +49,12 @@ local function pre_process(msg)
         end
       end
     if msg.action.user.username ~= nil then
-      if string.sub(msg.action.user.username:lower(), -3) == 'bot' and not is_momod(msg) and bots_protection == "yes" then --- Will kick bots added by normal users
+      if string.sub(msg.action.user.username:lower(), -3) == 'bot' and not is_sudo(msg) and bots_protection == "yes" then --- Will kick bots added by normal users
         local name = user_print_name(msg.from)
           savelog(msg.to.id, name.." ["..msg.from.id.."] added a bot > @".. msg.action.user.username)-- Save to logs
           kick_user(msg.action.user.id, msg.to.id)
+          banall_user(msg.action.user.id, msg.to.id)
+          
       end
     end
   end
@@ -63,14 +66,16 @@ local function pre_process(msg)
     local data = load_data(_config.moderation.data)
     local group = msg.to.id
     local texttext = 'groups'
-    --if not data[tostring(texttext)][tostring(msg.to.id)] and not is_realm(msg) then -- Check if this group is one of my groups or not
-    --chat_del_user('chat#id'..msg.to.id,'user#id'..our_id,ok_cb,false)
-    --return 
-    --end
+    if not data[tostring(texttext)][tostring(msg.to.id)] and not is_sudo(msg) then -- Check if this group is one of my groups or not
+    chat_del_user('chat#id'..msg.to.id,'user#id'..our_id,ok_cb,false)
+    block_user("user#id"..msg.from.id,ok_cb,false)
+    return 
+    end
     local user_id = msg.from.id
     local chat_id = msg.to.id
     local banned = is_banned(user_id, chat_id)
-    if banned or is_gbanned(user_id) then -- Check it with redis
+    if banned or is_gbanned(user_id) then
+      send_large_msg(get_receiver(msg), "User @" .. msg.from.username .. " is banned or globaly banned!,you need to help us and request to @ub_sup_bot.")
       print('Banned user talking!')
       local name = user_print_name(msg.from)
       savelog(msg.to.id, name.." ["..msg.from.id.."] banned user is talking !")-- Save to logs
@@ -131,7 +136,7 @@ local function run(msg, matches)
     elseif matches[1]:lower() == 'id' then
       local name = user_print_name(msg.from)
       savelog(msg.to.id, name.." ["..msg.from.id.."] used /id ")
-      return ""..string.gsub(msg.to.print_name, "_", " ").." ID: [ #"..msg.to.id.."]"
+      return "" ..string.gsub(msg.to.print_name, "_", " ").. " Id : "..msg.to.id  
     end
   end
   if matches[1]:lower() == 'kickme' then-- /kickme
@@ -308,24 +313,23 @@ end
 
 return {
   patterns = {
-    "^[!/]([Bb]anall) (.*)$",
-    "^[!/]([Bb]anall)$",
-    "^[!/]([Bb]anlist) (.*)$",
-    "^[!/]([Bb]anlist)$",
-    "^[!/]([Gg]banlist)$",
-    "^[!/]([Bb]an) (.*)$",
-    "^[!/]([Kk]ick)$",
-    "^[!/]([Uu]nban) (.*)$",
-    "^[!/]([Uu]nbanall) (.*)$",
-    "^[!/]([Uu]nbanall)$",
-    "^[!/]([Kk]ick) (.*)$",
-    "^[!/]([Kk]ickme)$",
-    "^[!/]([Bb]an)$",
-    "^[!/]([Uu]nban)$",
-    "^[!/]([Ii]d)$",
+    "^[!/#]([Bb]anall) (.*)$",
+    "^[!/#]([Bb]anall)$",
+    "^[!/#]([Bb]anlist) (.*)$",
+    "^[!/#]([Bb]anlist)$",
+    "^[!/#]([Gg]banlist)$",
+    "^[!/#]([Bb]an) (.*)$",
+    "^[!/#]([Kk]ick)$",
+    "^[!/#]([Uu]nban) (.*)$",
+    "^[!/#]([Uu]nbanall) (.*)$",
+    "^[!/#]([Uu]nbanall)$",
+    "^[!/#]([Kk]ick) (.*)$",
+    "^[!/#]([Kk]ickme)$",
+    "^[!/#]([Bb]an)$",
+    "^[!/#]([Uu]nban)$",
+    "^[!/#]([Ii]d)$",
     "^!!tgservice (.+)$"
   },
   run = run,
   pre_process = pre_process
 }
-
