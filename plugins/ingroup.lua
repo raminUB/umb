@@ -13,6 +13,8 @@ local function check_member_autorealm(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_join = 'no',
+          lock_bot = 'yes',
           lock_name = 'yes',
           lock_photo = 'no',
           lock_member = 'no',
@@ -43,6 +45,8 @@ local function check_member_realm_add(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_join = 'no',
+          lock_bot = 'yes',
           lock_name = 'yes',
           lock_photo = 'no',
           lock_member = 'no',
@@ -75,6 +79,8 @@ function check_member_group(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_join = 'no',
+          lock_bot = 'yes',
           lock_name = 'yes',
           lock_photo = 'no',
           lock_member = 'no',
@@ -107,6 +113,8 @@ local function check_member_modadd(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_join = 'no',
+          lock_bot = 'yes',
           lock_name = 'yes',
           lock_photo = 'no',
           lock_member = 'no',
@@ -121,7 +129,7 @@ local function check_member_modadd(cb_extra, success, result)
       end
       data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
       save_data(_config.moderation.data, data)
-      return send_large_msg(receiver, 'Group is added and you have been promoted as the owner ')
+      return send_large_msg(get_receiver(msg), "@" .. msg.from.username .. " have been promoted as the owner ")
     end
   end
 end
@@ -192,19 +200,23 @@ local function show_group_settingsmod(msg, data, target)
         	NUM_MSG_MAX = tonumber(data[tostring(msg.to.id)]['settings']['flood_msg_max'])
         	print('custom'..NUM_MSG_MAX)
       	else 
-        	NUM_MSG_MAX = 5
+        	NUM_MSG_MAX = 4
       	end
     end
     local bots_protection = "Yes"
     if data[tostring(msg.to.id)]['settings']['lock_bots'] then
     	bots_protection = data[tostring(msg.to.id)]['settings']['lock_bots']
    	end
+   	local lock_join = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_join'] then
+    	lock_join = data[tostring(msg.to.id)]['settings']['lock_join']
+   	end
     local leave_ban = "no"
     if data[tostring(msg.to.id)]['settings']['leave_ban'] then
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Group settings:\nLock group name : "..settings.lock_name.."\nLock group photo : "..settings.lock_photo.."\nLock group member : "..settings.lock_member.."\nLock group leave : "..leave_ban.."\nflood sensitivity : "..NUM_MSG_MAX.."\nBot protection : "..bots_protection--"\nPublic: "..public
+  local text = "Group settings" ..string.gsub(msg.to.print_name, "_", " ").. ":\nLock group name : "..settings.lock_name.."\nLock group photo : "..settings.lock_photo.."\nLock group member : "..settings.lock_member.."\nLock group join : "..settings.lock_join.."\nLock group leave : "..leave_ban.."\nflood sensitivity : "..NUM_MSG_MAX.."\nBot protection : "..bots_protection--"\nPublic: "..public
   return text
 end
 
@@ -226,6 +238,34 @@ local function get_description(msg, data)
   local about = string.gsub(msg.to.print_name, "_", " ")..':\n\n'..about
   return 'About '..about
 end
+local function lock_group_join(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_join_lock = data[tostring(target)]['settings']['lock_join']
+  if group_join_lock == 'yes' then
+    return 'Group join is locked'
+  else
+    data[tostring(target)]['settings']['lock_join'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group join has been locked'
+  end
+end
+
+local function unlock_group_join(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_join_lock = data[tostring(target)]['settings']['lock_join']
+  if group_join_lock == 'no' then
+    return 'Group join is not locked'
+  else
+    data[tostring(target)]['settings']['lock_join'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group join has been unlocked'
+  end
+end
+
 local function lock_group_arabic(msg, data, target)
   if not is_momod(msg) then
     return "For moderators only!"
@@ -312,7 +352,7 @@ local function unlock_group_namemod(msg, data, target)
   end
 end
 local function lock_group_floodmod(msg, data, target)
-  if not is_owner(msg) then
+  if not is_admin(msg) then
     return "Only admins can do it for now"
   end
   local group_flood_lock = data[tostring(target)]['settings']['flood']
@@ -326,7 +366,7 @@ local function lock_group_floodmod(msg, data, target)
 end
 
 local function unlock_group_floodmod(msg, data, target)
-  if not is_owner(msg) then
+  if not is_admin(msg) then
     return "Only admins can do it for now"
   end
   local group_flood_lock = data[tostring(target)]['settings']['flood']
@@ -449,8 +489,8 @@ local function set_rulesmod(msg, data, target)
 end
 local function modadd(msg)
   -- superuser and admins only (because sudo are always has privilege)
-  if not is_admin(msg) then
-    return "You're not admin"
+  if not is_sudo(msg) then
+    return "You're not sudo"
   end
   local data = load_data(_config.moderation.data)
   if is_group(msg) then
@@ -461,8 +501,8 @@ local function modadd(msg)
 end
 local function realmadd(msg)
   -- superuser and admins only (because sudo are always has privilege)
-  if not is_admin(msg) then
-    return "You're not admin"
+  if not is_sudo(msg) then
+    return "You're not sudo"
   end
   local data = load_data(_config.moderation.data)
   if is_realm(msg) then
@@ -474,8 +514,8 @@ end
 -- Global functions
 function modrem(msg)
   -- superuser and admins only (because sudo are always has privilege)
-  if not is_admin(msg) then
-    return "You're not admin"
+  if not is_sudo(msg) then
+    return "You're not sudo"
   end
   local data = load_data(_config.moderation.data)
   if not is_group(msg) then
@@ -487,8 +527,8 @@ end
 
 function realmrem(msg)
   -- superuser and admins only (because sudo are always has privilege)
-  if not is_admin(msg) then
-    return "You're not admin"
+  if not is_sudo(msg) then
+    return "You're not sudo"
   end
   local data = load_data(_config.moderation.data)
   if not is_realm(msg) then
@@ -634,7 +674,7 @@ local function callbackres(extra, success, result)
   local user = result.id
   local name = string.gsub(result.print_name, "_", " ")
   local chat = 'chat#id'..extra.chatid
-  send_large_msg(chat, user..'\n'..name)
+  send_large_msg(chat, user)
   return user
 end
 
@@ -973,6 +1013,10 @@ local function run(msg, matches)
     end
     if matches[1] == 'lock' then
       local target = msg.to.id
+      if matches[2] == 'join' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked join ")
+        return lock_group_join(msg, data, target)
+      end
       if matches[2] == 'name' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked name ")
         return lock_group_namemod(msg, data, target)
@@ -1000,6 +1044,10 @@ local function run(msg, matches)
    end
     if matches[1] == 'unlock' then 
       local target = msg.to.id
+      if matches[2] == 'join' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked join ")
+        return unlock_group_join(msg, data, target)
+      end
       if matches[2] == 'name' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked name ")
         return unlock_group_namemod(msg, data, target)
@@ -1116,8 +1164,8 @@ local function run(msg, matches)
       if not is_momod(msg) then
         return "For moderators only!"
       end
-      if tonumber(matches[2]) < 5 or tonumber(matches[2]) > 20 then
-        return "Wrong number,range is [5-20]"
+      if tonumber(matches[2]) < 0 or tonumber(matches[2]) > 20 then
+        return "Wrong number,range is [0-20]"
       end
       local flood_max = matches[2]
       data[tostring(msg.to.id)]['settings']['flood_msg_max'] = flood_max
@@ -1203,7 +1251,7 @@ local function run(msg, matches)
       return res_user(username,  callbackres, cbres_extra)
     end
     if matches[1] == 'kickinactive' then
-      --send_large_msg('chat#id'..msg.to.id, 'I\'m in matches[1]')
+      send_large_msg('chat#id'..msg.to.id, 'I\'m in matches[1]')
 	    if not is_momod(msg) then
 	      return 'Only a moderator can kick inactive users'
 	    end
