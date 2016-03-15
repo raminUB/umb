@@ -199,8 +199,8 @@ local function check_member_modrem(cb_extra, success, result)
 end
 --End Check Member
 local function show_group_settingsmod(msg, data, target)
- 	if not is_realm(msg) then
-    	return msg
+ 	if is_realm(msg) then
+    	return 'This here is realm'
   	end
   	local data = load_data(_config.moderation.data)
     if data[tostring(msg.to.id)] then
@@ -232,7 +232,7 @@ local function show_group_settingsmod(msg, data, target)
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group adstag : "..settings.lock_adstag.."\n<>Lock group leave : "..leave_ban.."\n<>Flood sensitivity : "..NUM_MSG_MAX.."\n<>Bot protection : "..bots_protection--"\nPublic: "..public
+  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group adstag : "..settings.lock_adstag.."\n<>Lock group arabic : "...."\n<>Lock group leave : "..settings.lock_arabic.."\n<>Lock group flood : "..flood.."\n<>Flood sensitivity : "..NUM_MSG_MAX.."\n<>Bot protection : "..bots_protection.."\nGroup type : "..group_type--"\nPublic: "..public
   return text
 end
 
