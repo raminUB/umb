@@ -1,10 +1,8 @@
-
---An empty table for solving multiple kicking problem(thanks to @topkecleon )
 kicktable = {}
 
 do
 
-local TIME_CHECK = 2 -- seconds
+local TIME_CHECK = 1 -- seconds
 local data = load_data(_config.moderation.data)
 -- Save stats, ban user
 local function pre_process(msg)
@@ -58,7 +56,7 @@ local function pre_process(msg)
     local hash = 'user:'..msg.from.id..':msgs'
     local msgs = tonumber(redis:get(hash) or 0)
     local data = load_data(_config.moderation.data)
-    local NUM_MSG_MAX = 5
+    local NUM_MSG_MAX = 30
     if data[tostring(msg.to.id)] then
       if data[tostring(msg.to.id)]['settings']['flood_msg_max'] then
         NUM_MSG_MAX = tonumber(data[tostring(msg.to.id)]['settings']['flood_msg_max'])--Obtain group flood sensitivity
@@ -77,10 +75,8 @@ local function pre_process(msg)
       if kicktable[user] == true then
         return
       end
+      send_large_msg(get_receiver(msg), "User @" .. msg.from.username .. " don't spamming!")
       kick_user(user, chat)
-      if msg.to.type == "user" then
-        block_user("user#id"..msg.from.id,ok_cb,false)--Block user if spammed in private
-      end
       local name = user_print_name(msg.from)
       --save it to log file
       savelog(msg.to.id, name.." ["..msg.from.id.."] spammed and kicked ! ")
@@ -89,9 +85,9 @@ local function pre_process(msg)
       redis:incr(gbanspam)
       local gbanspam = 'gban:spam'..msg.from.id
       local gbanspamonredis = redis:get(gbanspam)
-      --Check if user has spammed is group more than 4 times  
+      --Check if user has spammed is group more than 2 times  
       if gbanspamonredis then
-        if tonumber(gbanspamonredis) ==  4 and not is_owner(msg) then
+        if tonumber(gbanspamonredis) == 3 and not is_momod(msg) then
           --Global ban that user
           banall_user(msg.from.id)
           local gbanspam = 'gban:spam'..msg.from.id
@@ -119,7 +115,7 @@ end
 
 local function cron()
   --clear that table on the top of the plugins
-  kicktable = {}
+	kicktable = {}
 end
 
 return {
