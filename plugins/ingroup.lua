@@ -1082,6 +1082,14 @@ local function run(msg, matches)
     end
     if matches[1] == 'lock' then
       local target = msg.to.id
+       if matches[2] == 'tag' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked  ")
+        return lock_group_join(msg, data, target)
+      end
+       if matches[2] == 'link' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
+        return lock_group_adstag(msg, data, target)
+      end
       if matches[2] == 'join' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked join ")
         return lock_group_join(msg, data, target)
@@ -1113,6 +1121,14 @@ local function run(msg, matches)
    end
     if matches[1] == 'unlock' then 
       local target = msg.to.id
+      if matches[2] == 'tag' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked adstag ")
+        return unlock_group_adstag(msg, data, target)
+      end
+      if matches[2] == 'link' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked adslink ")
+        return unlock_group_join(msg, data, target)
+      end
       if matches[2] == 'join' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked join ")
         return unlock_group_join(msg, data, target)
