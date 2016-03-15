@@ -232,7 +232,7 @@ local function show_group_settingsmod(msg, data, target)
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group adstag : "..settings.lock_adstag.."\n<>Lock group arabic : "...."\n<>Lock group leave : "..settings.lock_arabic.."\n<>Lock group flood : "..flood.."\n<>Flood sensitivity : "..NUM_MSG_MAX.."\n<>Bot protection : "..bots_protection.."\nGroup type : "..group_type--"\nPublic: "..public
+  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group adstag : "..settings.lock_adstag.."\n<>Lock group arabic : "...."\n<>Lock group leave : "..settings.lock_arabic.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
   return text
 end
 
@@ -250,7 +250,7 @@ local function get_description(msg, data)
     return 'No description available.'
   end
   local about = data[tostring(msg.to.id)][data_cat]
-  local about = string.gsub(msg.to.print_name, "_", " ")..':\n\n'..about
+  local about = string.gsub(msg.to.print_name, " " _",")..':\n\n'..about
   return 'About '..about
 end
 
@@ -364,8 +364,8 @@ local function unlock_group_arabic(msg, data, target)
 end
 
 local function lock_group_bots(msg, data, target)
-  if not is_momod(msg) then
-    return "For moderators only!"
+  if not is_admin(msg) then
+    return "For admins only!"
   end
   local group_bots_lock = data[tostring(target)]['settings']['lock_bots']
   if group_bots_lock == 'yes' then
@@ -378,8 +378,8 @@ local function lock_group_bots(msg, data, target)
 end
 
 local function unlock_group_bots(msg, data, target)
-  if not is_momod(msg) then
-    return "For moderators only!"
+  if not is_admin(msg) then
+    return "For admin only!"
   end
   local group_bots_lock = data[tostring(target)]['settings']['lock_bots']
   if group_bots_lock == 'no' then
