@@ -3,7 +3,6 @@
 do
 
 local function create_group(msg)
-        -- superuser and admins only (because sudo are always has privilege)
         if is_sudo(msg) or is_realm(msg) and is_admin(msg) then
                 local group_creator = msg.from.print_name
                 create_group_chat (group_creator, group_name, ok_cb, false)
@@ -12,7 +11,6 @@ local function create_group(msg)
 end
 
 local function create_realm(msg)
-        -- superuser and admins only (because sudo are always has privilege)
         if is_sudo(msg) or is_realm(msg) and is_admin(msg) then
                 local group_creator = msg.from.print_name
                 create_group_chat (group_creator, group_name, ok_cb, false)
@@ -665,20 +663,20 @@ return {
     "^[!/](setname) (.*)$",
     "^[!/](setgpname) (%d+) (.*)$",
     "^[!/](setname) (%d+) (.*)$",
-        "^[!/](lock) (%d+) (.*)$",
+    "^[!/](lock) (%d+) (.*)$",
     "^[!/](unlock) (%d+) (.*)$",
     "^[!/](setting) (%d+)$",
-        "^[!/](wholist)$",
-        "^[!/](who)$",
-        "^[!/](type)$",
+    "^[!/](wholist)$",
+    "^[!/](who)$",
+    "^[!/](type)$",
     "^[!/](kill) (chat) (%d+)$",
     "^[!/](kill) (realm) (%d+)$",
     "^[!/](addadmin) (.*)$", -- sudoers only
     "^[!/](removeadmin) (.*)$", -- sudoers only
     "^[!/](list) (.*)$",
-        "^[!/](log)$",
-        "^[!/](help)$",
-        "^!!tgservice (.+)$",
+    "^[!/](log)$",
+    "^[!/](help)$",
+    "^!!tgservice (.+)$",
   },
   run = run
 }
