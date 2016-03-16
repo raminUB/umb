@@ -13,6 +13,7 @@ local function check_member_autorealm(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_arabic = 'no',
           lock_adstag = 'no',
           lock_adslink = 'no',
           lock_join = 'no',
@@ -47,6 +48,7 @@ local function check_member_realm_add(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_arabic = 'no',
           lock_adstag = 'no',
           lock_adslink = 'no',
           lock_join = 'no',
@@ -83,6 +85,7 @@ function check_member_group(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_arabic = 'no',
           lock_adstag = 'no',
           lock_adslink = 'no',
           lock_join = 'no',
@@ -119,6 +122,7 @@ local function check_member_modadd(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_arabic = 'no',
           lock_adstag = 'no',
           lock_adslink = 'no',
           lock_join = 'no',
@@ -215,6 +219,10 @@ local function show_group_settingsmod(msg, data, target)
     if data[tostring(msg.to.id)]['settings']['lock_bots'] then
     	bots_protection = data[tostring(msg.to.id)]['settings']['lock_bots']
    	end
+   	local lock_arabic = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_arabic'] then
+    	lock_arabic = data[tostring(msg.to.id)]['settings']['lock_arabic']
+   	end
    	local lock_join = "no"
     if data[tostring(msg.to.id)]['settings']['lock_join'] then
     	lock_join = data[tostring(msg.to.id)]['settings']['lock_join']
@@ -232,7 +240,7 @@ local function show_group_settingsmod(msg, data, target)
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group adstag : "..settings.lock_adstag.."\n<>Lock group arabic : "...."\n<>Lock group leave : "..settings.lock_arabic.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
+  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group adstag : "..settings.lock_adstag.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
   return text
 end
 
