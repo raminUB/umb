@@ -209,8 +209,16 @@ function create_config( )
   config = {
     enabled_plugins = {
     "filter",
+    "clink",
+    "lock_share",
+    "lock_gif",
+    "lock_photo",
+    "lock_en",
+    "lock_emoji",
+    "lock_audio",
+    "lock_chat",
     "getplugins",
-    "join",
+    "lock_join",
     "plugins",
     "onservice",
     "inrealm",
