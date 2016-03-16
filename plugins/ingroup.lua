@@ -320,7 +320,7 @@ end
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "[ " ..string.gsub(msg.to.print_name, "_", " ").." ] /settings : \n#Group id : ( "..msg.to.id.. " ) \n#Your id : ( " ..msg.from.id.. " ) \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group voice : "..settings.lock_audio.."\n<>Lock group emoji : "..settings.lock_emoji.."\n<>Lock group files : "..settings.lock_gif.."\n<>Lock group image : "..settings.lock_ax.."\n<>Lock group english : "..settings.lock_en.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
+  local text = "[ " ..string.gsub(msg.to.print_name, "_", " ").." ] /settings : \n#Group id : ( "..msg.to.id.. " ) \n#Your id : ( " ..msg.from.id.. " ) \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group voice : "..settings.lock_audio.."\n<>Lock group emoji : "..settings.lock_emoji.."\n<>Lock group files : "..settings.lock_gif.."\n<>Lock group image : "..settings.lock_ax.."\n<>Lock group english : "..settings.lock_en.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]\n<>Filer words : "..list_filter(msg)
   return text
 end
 
@@ -338,7 +338,7 @@ local function get_description(msg, data)
     return 'No description available.'
   end
   local about = data[tostring(msg.to.id)][data_cat]
-  local about = string.gsub(msg.to.print_name, " " _",")..':\n\n'..about
+  local about = string.gsub(msg.to.print_name, "_"," ")..':\n\n'..about
   return 'About '..about
 end
 
