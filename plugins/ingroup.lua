@@ -1105,7 +1105,7 @@ end
 
 local function help()
   local help_text = tostring(_config.help_text)
-  return help_text
+  return 
 end
 
 local function cleanmember(cb_extra, success, result)
