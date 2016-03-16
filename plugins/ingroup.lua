@@ -13,6 +13,7 @@ local function check_member_autorealm(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_sticker = 'no',
           lock_share = 'no',
           lock_video = 'no',
           lock_gif = 'no',
@@ -56,6 +57,7 @@ local function check_member_realm_add(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_sticker = 'no',
           lock_share = 'no',
           lock_video = 'no',
           lock_gif = 'no',
@@ -101,6 +103,7 @@ function check_member_group(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_sticker = 'no',
           lock_share = 'no',
           lock_video = 'no',
           lock_gif = 'no',
@@ -146,6 +149,7 @@ local function check_member_modadd(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_sticker = 'no',
           lock_share = 'no',
           lock_video = 'no',
           lock_gif = 'no',
@@ -291,6 +295,10 @@ end
     if data[tostring(msg.to.id)]['settings']['lock_share'] then
     	lock_share = data[tostring(msg.to.id)]['settings']['lock_share']
    	end
+   	local lock_sticker = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_sticker'] then
+    	lock_sticker = data[tostring(msg.to.id)]['settings']['lock_sticker']
+   	end
    	local lock_video = "no"
     if data[tostring(msg.to.id)]['settings']['lock_video'] then
     	lock_video = data[tostring(msg.to.id)]['settings']['lock_video']
@@ -336,7 +344,7 @@ end
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "[ " ..string.gsub(msg.to.print_name, "_", " ").." ] /settings : \n#Group id : ( "..msg.to.id.. " ) \n#Your id : ( " ..msg.from.id.. " ) \n===========@UB_CH==============\n<>Lock group /name : #"..settings.lock_name.."\n<>Lock group /photo : #"..settings.lock_photo.."\n<>Lock group /member : #"..settings.lock_member.."\n<>Lock group /join : #"..settings.lock_join.."\n<>Lock group /ads(link) : #"..settings.lock_adslink.."\n<>Lock group /ads(tag) : #"..settings.lock_adstag.."\n<>Lock group /voice : #"..settings.lock_audio.."\n<>Lock group /emoji : #"..settings.lock_emoji.."\n<>Lock group /files : #"..settings.lock_gif.."\n<>Lock group /image : #"..settings.lock_ax.."\n<>Lock group /film : #"..settings.lock_video.."\n<>Lock group /share : #"..settings.lock_share.."\n<>Lock group /english : #"..settings.lock_en.."\n<>Lock group /chat : #"..settings.lock_chat.."\n<>Lock group /arabic : #"..lock_arabic.."\n<>Lock group /leave : #"..leave_ban.."\n<>Lock group /flood : #"..settings.flood.."\n<>Group number /flood : [ #"..NUM_MSG_MAX.." ]\n<>Lock group /bot : #"..bots_protection.."\n<>Group /type : [ #"..get_group_type(msg).." ]\n<>Lock group /filterword : "..list_filter(msg)
+  local text = "[ " ..string.gsub(msg.to.print_name, "_", " ").." ] /settings : \n#Group id : ( "..msg.to.id.. " ) \n#Your id : ( " ..msg.from.id.. " ) \n===========@UB_CH==============\n<>Lock group /name : #"..settings.lock_name.."\n<>Lock group /photo : #"..settings.lock_photo.."\n<>Lock group /member : #"..settings.lock_member.."\n<>Lock group /join : #"..settings.lock_join.."\n<>Lock group /ads(link) : #"..settings.lock_adslink.."\n<>Lock group /ads(tag) : #"..settings.lock_adstag.."\n<>Lock group /voice : #"..settings.lock_audio.."\n<>Lock group /emoji : #"..settings.lock_emoji.."\n<>Lock group /files : #"..settings.lock_gif.."\n<>Lock group /image : #"..settings.lock_ax.."\n<>Lock group /film : #"..settings.lock_video.."\n<>Lock group /sticker : #"..settings.lock_sticker.."\n<>Lock group /share : #"..settings.lock_share.."\n<>Lock group /english : #"..settings.lock_en.."\n<>Lock group /chat : #"..settings.lock_chat.."\n<>Lock group /arabic : #"..lock_arabic.."\n<>Lock group /leave : #"..leave_ban.."\n<>Lock group /flood : #"..settings.flood.."\n<>Group number /flood : [ #"..NUM_MSG_MAX.." ]\n<>Lock group /bot : #"..bots_protection.."\n<>Group /type : [ #"..get_group_type(msg).." ]\n<>Lock group /filterword : "..list_filter(msg)
   return text
 end
 
@@ -356,6 +364,33 @@ local function get_description(msg, data)
   local about = data[tostring(msg.to.id)][data_cat]
   local about = string.gsub(msg.to.print_name, "_", " ")..':\n\n'..about
   return 'About '..about
+end
+
+local function lock_group_sticker(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_sticker_lock = data[tostring(target)]['settings']['lock_sticker']
+  if group_sticker_lock == 'yes' then
+    return 'Group sticker is already locked'
+  else
+    data[tostring(target)]['settings']['lock_sticker'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group sticker has been locked'
+  end
+end
+local function unlock_group_sticker(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_sticker_lock = data[tostring(target)]['settings']['lock_sticker']
+  if group_sticker_lock == 'no' then
+    return 'Group sticker is not locked'
+  else
+    data[tostring(target)]['settings']['lock_sticker'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group sticker has been unlocked'
+  end
 end
 
 local function lock_group_video(msg, data, target)
@@ -1406,6 +1441,10 @@ local function run(msg, matches)
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
         return lock_group_tag(msg, data, target)
       end
+      if matches[2] == 'sticker' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked sticker ")
+        return lock_group_sticker(msg, data, target)
+      end
        if matches[2] == 'film' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked video ")
         return lock_group_video(msg, data, target)
@@ -1476,6 +1515,10 @@ local function run(msg, matches)
       if matches[2] == 'tag' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked adstag ")
         return unlock_group_adstag(msg, data, target)
+      end
+       if matches[2] == 'sticker' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked sticker ")
+        return unlock_group_sticker(msg, data, target)
       end
        if matches[2] == 'file' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked files ")
