@@ -254,7 +254,7 @@ local function show_group_settingsmod(msg, data, target)
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
+  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group voice : "..settings.lock_audio.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
   return text
 end
 
@@ -276,13 +276,67 @@ local function get_description(msg, data)
   return 'About '..about
 end
 
+ local function lock_group_audio(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_audio_lock = data[tostring(target)]['settings']['lock_audio']
+  if group_audio_lock == 'yes' then
+    return 'Group audio is already locked'
+  else
+    data[tostring(target)]['settings']['lock_audio'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group audio has been locked'
+  end
+end
+local function unlock_group_audio(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_audio_lock = data[tostring(target)]['settings']['lock_audio']
+  if group_audio_lock == 'no' then
+    return 'Group audio is not locked'
+  else
+    data[tostring(target)]['settings']['lock_audio'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group audio has been unlocked'
+  end
+end
+
+ local function lock_group_chat(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_chat_lock = data[tostring(target)]['settings']['lock_chat']
+  if group_chat_lock == 'yes' then
+    return 'Group chat is already locked'
+  else
+    data[tostring(target)]['settings']['lock_chat'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group chat has been locked'
+  end
+end
+local function unlock_group_chat(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_chat_lock = data[tostring(target)]['settings']['lock_adstag']
+  if group_chat_lock == 'no' then
+    return 'Group adstag is not locked'
+  else
+    data[tostring(target)]['settings']['lock_chat'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group chat has been unlocked'
+  end
+end
+
  local function lock_group_adstag(msg, data, target)
   if not is_momod(msg) then
     return "Only moderators can do it for now"
   end
   local group_adstag_lock = data[tostring(target)]['settings']['lock_adstag']
   if group_adstag_lock == 'yes' then
-    return 'Group adstag is already allocked'
+    return 'Group adstag is already locked'
   else
     data[tostring(target)]['settings']['lock_adstag'] = 'yes'
     save_data(_config.moderation.data, data)
@@ -309,7 +363,7 @@ end
   end
   local group_adslink_lock = data[tostring(target)]['settings']['lock_adslink']
   if group_adslink_lock == 'yes' then
-    return 'Group adslink is already allocked'
+    return 'Group adslink is already locked'
   else
     data[tostring(target)]['settings']['lock_adslink'] = 'yes'
     save_data(_config.moderation.data, data)
@@ -1105,12 +1159,20 @@ local function run(msg, matches)
     if matches[1] == 'lock' then
       local target = msg.to.id
        if matches[2] == 'tag' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked  ")
-        return lock_group_join(msg, data, target)
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
+        return lock_group_tag(msg, data, target)
+      end
+      if matches[2] == 'voice' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked audio ")
+        return lock_group_audio(msg, data, target)
+      end
+      if matches[2] == 'chat' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked tag ")
+        return lock_group_chat(msg, data, target)
       end
        if matches[2] == 'link' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
-        return lock_group_adstag(msg, data, target)
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adslink ")
+        return lock_group_adslink(msg, data, target)
       end
       if matches[2] == 'join' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked join ")
@@ -1149,7 +1211,15 @@ local function run(msg, matches)
       end
       if matches[2] == 'link' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked adslink ")
-        return unlock_group_join(msg, data, target)
+        return unlock_group_adslink(msg, data, target)
+      end
+      if matches[2] == 'voice' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked audio ")
+        return unlock_group_audio(msg, data, target)
+      end
+      if matches[2] == 'chat' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked chat ")
+        return unlock_group_chat(msg, data, target)
       end
       if matches[2] == 'join' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked join ")
