@@ -13,6 +13,8 @@ local function check_member_autorealm(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_gif = 'no',
+          lock_ax = 'no',
           lock_emoji = 'no',
           lock_en = 'no',
           lock_audio = 'no',
@@ -52,6 +54,8 @@ local function check_member_realm_add(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_gif = 'no',
+          lock_ax = 'no',
           lock_arabic = 'no',
           lock_emoji = 'no',
           lock_en = 'no',
@@ -93,6 +97,8 @@ function check_member_group(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_gif = 'no',
+          lock_ax = 'no',
           lock_audio = 'no',
           lock_emoji = 'no',
           lock_en = 'no',
@@ -134,6 +140,8 @@ local function check_member_modadd(cb_extra, success, result)
         set_owner = member_id ,
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_gif = 'no',
+          lock_ax = 'no',
           lock_audio = 'no',
           lock_emoji = 'no',
           lock_en = 'no',
@@ -239,6 +247,14 @@ local function show_group_settingsmod(msg, data, target)
     if data[tostring(msg.to.id)]['settings']['lock_arabic'] then
     	lock_arabic = data[tostring(msg.to.id)]['settings']['lock_arabic']
    	end
+   	local lock_gif = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_gif'] then
+    	lock_gif = data[tostring(msg.to.id)]['settings']['lock_gif']
+   	end
+   	local lock_ax = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_ax'] then
+    	lock_ax = data[tostring(msg.to.id)]['settings']['lock_ax']
+   	end
    	 local lock_audio = "no"
     if data[tostring(msg.to.id)]['settings']['lock_audio'] then
     	lock_audio = data[tostring(msg.to.id)]['settings']['lock_audio']
@@ -272,7 +288,7 @@ local function show_group_settingsmod(msg, data, target)
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "[ " ..string.gsub(msg.to.print_name, "_", " ").." ] /settings : \n#Group id : ( "..msg.to.id.. " ) \n#Your id : ( " ..msg.from.id.. " ) \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group voice : "..settings.lock_audio.."\n<>Lock group emoji : "..settings.lock_emoji.."\n<>Lock group english : "..settings.lock_en.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
+  local text = "[ " ..string.gsub(msg.to.print_name, "_", " ").." ] /settings : \n#Group id : ( "..msg.to.id.. " ) \n#Your id : ( " ..msg.from.id.. " ) \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group voice : "..settings.lock_audio.."\n<>Lock group emoji : "..settings.lock_emoji.."\n<>Lock group files : "..settings.lock_gif.."\n<>Lock group image : "..settings.lock_ax.."\n<>Lock group english : "..settings.lock_en.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
   return text
 end
 
@@ -292,6 +308,60 @@ local function get_description(msg, data)
   local about = data[tostring(msg.to.id)][data_cat]
   local about = string.gsub(msg.to.print_name, " " _",")..':\n\n'..about
   return 'About '..about
+end
+
+ local function lock_group_gif(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_gif_lock = data[tostring(target)]['settings']['lock_gif']
+  if group_gif_lock == 'yes' then
+    return 'Group gif and files is already locked'
+  else
+    data[tostring(target)]['settings']['lock_gif'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group gif and files has been locked'
+  end
+end
+local function unlock_group_ax(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_gif_lock = data[tostring(target)]['settings']['lock_gif']
+  if group_gif_lock == 'no' then
+    return 'Group files is not locked'
+  else
+    data[tostring(target)]['settings']['lock_gif'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group gif and files has been unlocked'
+  end
+end
+
+ local function lock_group_ax(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_ax_lock = data[tostring(target)]['settings']['lock_ax']
+  if group_ax_lock == 'yes' then
+    return 'Group image is already locked'
+  else
+    data[tostring(target)]['settings']['lock_ax'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group image has been locked'
+  end
+end
+local function unlock_group_ax(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_ax_lock = data[tostring(target)]['settings']['lock_ax']
+  if group_ax_lock == 'no' then
+    return 'Group en is not locked'
+  else
+    data[tostring(target)]['settings']['lock_ax'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group image has been unlocked'
+  end
 end
 
  local function lock_group_en(msg, data, target)
@@ -1234,6 +1304,14 @@ local function run(msg, matches)
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
         return lock_group_tag(msg, data, target)
       end
+      if matches[2] == 'file' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked file ")
+        return lock_group_file(msg, data, target)
+      end
+      if matches[2] == 'image' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked image ")
+        return lock_group_ax(msg, data, target)
+      end
        if matches[2] == 'chat' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked chat ")
         return lock_group_chat(msg, data, target)
@@ -1288,6 +1366,14 @@ local function run(msg, matches)
       if matches[2] == 'tag' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked adstag ")
         return unlock_group_adstag(msg, data, target)
+      end
+       if matches[2] == 'file' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked files ")
+        return unlock_group_gif(msg, data, target)
+      end
+       if matches[2] == 'image' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked imags ")
+        return unlock_group_ax(msg, data, target)
       end
        if matches[2] == 'chat' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked chat ")
