@@ -494,7 +494,7 @@ local function unlock_group_chat(msg, data, target)
   if not is_momod(msg) then
     return "Only moderators can do it for now"
   end
-  local group_chat_lock = data[tostring(target)]['settings']['lock_adstag']
+  local group_chat_lock = data[tostring(target)]['settings']['lock_chat']
   if group_chat_lock == 'no' then
     return 'Group adstag is not locked'
   else
