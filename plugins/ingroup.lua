@@ -13,6 +13,8 @@ local function check_member_autorealm(cb_extra, success, result)
         group_type = 'Realm',
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
+          lock_emoji = 'no',
+          lock_en = 'no',
           lock_audio = 'no',
           lock_chat = 'no',
           lock_arabic = 'no',
@@ -51,6 +53,10 @@ local function check_member_realm_add(cb_extra, success, result)
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
           lock_arabic = 'no',
+          lock_emoji = 'no',
+          lock_en = 'no',
+          lock_audio = 'no',
+          lock_chat = 'no',
           lock_adstag = 'no',
           lock_adslink = 'no',
           lock_join = 'no',
@@ -88,6 +94,8 @@ function check_member_group(cb_extra, success, result)
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
           lock_audio = 'no',
+          lock_emoji = 'no',
+          lock_en = 'no',
           lock_chat = 'no',
           lock_arabic = 'no',
           lock_adstag = 'no',
@@ -127,6 +135,8 @@ local function check_member_modadd(cb_extra, success, result)
         settings = {
           set_name = string.gsub(msg.to.print_name, '_', ' '),
           lock_audio = 'no',
+          lock_emoji = 'no',
+          lock_en = 'no',
           lock_chat = 'no',
           lock_arabic = 'no',
           lock_adstag = 'no',
@@ -233,6 +243,14 @@ local function show_group_settingsmod(msg, data, target)
     if data[tostring(msg.to.id)]['settings']['lock_audio'] then
     	lock_audio = data[tostring(msg.to.id)]['settings']['lock_audio']
    	end
+   	local lock_empoji = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_emoji'] then
+    	lock_emoji = data[tostring(msg.to.id)]['settings']['lock_emoji']
+   	end
+   	local lock_en = "no"
+    if data[tostring(msg.to.id)]['settings']['lock_en'] then
+    	lock_en = data[tostring(msg.to.id)]['settings']['lock_en']
+   	end
    	 local lock_chat = "no"
     if data[tostring(msg.to.id)]['settings']['lock_chat'] then
     	lock_chat = data[tostring(msg.to.id)]['settings']['lock_chat']
@@ -254,7 +272,7 @@ local function show_group_settingsmod(msg, data, target)
     	leave_ban = data[tostring(msg.to.id)]['settings']['leave_ban']
    	end
   local settings = data[tostring(target)]['settings']
-  local text = "Settings for [" ..string.gsub(msg.to.print_name, "_", " ").."] : \n#Group id : ("..msg.to.id.. ") \n#Your id and user : (" ..msg.from.id.. ") \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group voice : "..settings.lock_audio.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
+  local text = "[ " ..string.gsub(msg.to.print_name, "_", " ").." ] /settings : \n#Group id : ( "..msg.to.id.. " ) \n#Your id : ( " ..msg.from.id.. " ) \n===========@UB_CH==============\n<>Lock group name : "..settings.lock_name.."\n<>Lock group photo : "..settings.lock_photo.."\n<>Lock group member : "..settings.lock_member.."\n<>Lock group join : "..settings.lock_join.."\n<>Lock group ads(link) : "..settings.lock_adslink.."\n<>Lock group ads(tag) : "..settings.lock_adstag.."\n<>Lock group voice : "..settings.lock_audio.."\n<>Lock group emoji : "..settings.lock_emoji.."\n<>Lock group english : "..settings.lock_en.."\n<>Lock group arabic : "..settings.lock_chat.."\n<>Lock group arabic : "..lock_arabic.."\n<>Lock group leave : "..leave_ban.."\n<>Lock group flood : "..settings.flood.."\n<>Flood sensitivity : [ "..NUM_MSG_MAX.." ]\n<>Bot protection : "..bots_protection.."\n<>Group type : [ "..get_group_type(msg).." ]"
   return text
 end
 
@@ -274,6 +292,60 @@ local function get_description(msg, data)
   local about = data[tostring(msg.to.id)][data_cat]
   local about = string.gsub(msg.to.print_name, " " _",")..':\n\n'..about
   return 'About '..about
+end
+
+ local function lock_group_en(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_en_lock = data[tostring(target)]['settings']['lock_en']
+  if group_en_lock == 'yes' then
+    return 'Group engish is already locked'
+  else
+    data[tostring(target)]['settings']['lock_en'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group english has been locked'
+  end
+end
+local function unlock_group_en(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_en_lock = data[tostring(target)]['settings']['lock_en']
+  if group_en_lock == 'no' then
+    return 'Group en is not locked'
+  else
+    data[tostring(target)]['settings']['lock_en'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group en has been unlocked'
+  end
+end
+
+ local function lock_group_emoji(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_emoji_lock = data[tostring(target)]['settings']['lock_emoji']
+  if group_emoji_lock == 'yes' then
+    return 'Group emoji is already locked'
+  else
+    data[tostring(target)]['settings']['lock_emoji'] = 'yes'
+    save_data(_config.moderation.data, data)
+    return 'Group emoji has been locked'
+  end
+end
+local function unlock_group_emoji(msg, data, target)
+  if not is_momod(msg) then
+    return "Only moderators can do it for now"
+  end
+  local group_emoji_lock = data[tostring(target)]['settings']['lock_emoji']
+  if group_emoji_lock == 'no' then
+    return 'Group emoji is not locked'
+  else
+    data[tostring(target)]['settings']['lock_emoji'] = 'no'
+    save_data(_config.moderation.data, data)
+    return 'Group emoji has been unlocked'
+  end
 end
 
  local function lock_group_audio(msg, data, target)
@@ -1162,6 +1234,14 @@ local function run(msg, matches)
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
         return lock_group_tag(msg, data, target)
       end
+       if matches[2] == 'chat' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked chat ")
+        return lock_group_chat(msg, data, target)
+      end
+       if matches[2] == 'english' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked english ")
+        return lock_group_en(msg, data, target)
+      end
       if matches[2] == 'voice' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked audio ")
         return lock_group_audio(msg, data, target)
@@ -1208,6 +1288,14 @@ local function run(msg, matches)
       if matches[2] == 'tag' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked adstag ")
         return unlock_group_adstag(msg, data, target)
+      end
+       if matches[2] == 'chat' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked chat ")
+        return unlock_group_chat(msg, data, target)
+      end
+       if matches[2] == 'english' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked english ")
+        return unlock_group_en(msg, data, target)
       end
       if matches[2] == 'link' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked adslink ")
