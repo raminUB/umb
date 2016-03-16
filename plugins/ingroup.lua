@@ -230,6 +230,38 @@ local function show_group_settingsmod(msg, data, target)
  	if is_realm(msg) then
     	return 'This here is realm'
   	end
+local function get_group_type(msg)
+  local data = load_data(_config.moderation.data)
+  if data[tostring(msg.to.id)] then
+    if not data[tostring(msg.to.id)]['group_type'] then
+     return 'No group type available.'
+    end
+     local group_type = data[tostring(msg.to.id)]['group_type']
+     return group_type
+  else 
+     return 'Chat type not found.'
+  end 
+end
+local function get_filter_hash(msg)
+	if msg.to.type == 'chat' then
+		return 'chat:'..msg.to.id..':filters'
+	end
+end 
+
+local function list_filter(msg)
+	if msg.to.type == 'user' then
+		return nil
+	end
+	local hash = get_filter_hash(msg)
+	if hash then
+		local names = redis:hkeys(hash)
+		local text = "\n"
+		for i=1, #names do
+			text = text..'> '..names[i]..'\n'
+		end
+		return text
+	end
+end
   	local data = load_data(_config.moderation.data)
     if data[tostring(msg.to.id)] then
      	if data[tostring(msg.to.id)]['settings']['flood_msg_max'] then
