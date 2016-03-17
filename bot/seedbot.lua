@@ -250,17 +250,18 @@ function create_config( )
     sudo_users = {140925196,tonumber(our_id)},--Sudo users
     disabled_channels = {},
     moderation = {data = 'data/moderation.json'},
-    about_text = [[UB Helper 1/2
-An advance Administration bot based on Teleseed/telegram-bot 
+    about_text = [[Unlimited 1
+An advance Administration bot based on @Teleub/telegram-bot 
 
-@CIA_EMC_besik ([Ss]udo)
-
+@sorblack_2 ([Ss]udo)
+@UB_CIA [creator]
 tnks to my friends
 
 
 Our channels
 👑 @UB_CH 👑 (Admin : @Yv_ADMIN_5_BLH_vY )
-yon.ir/wRZ8
+
+yon.ir/QJL8
 ]],
     help_text_realm = [[
 Realm Commands:
