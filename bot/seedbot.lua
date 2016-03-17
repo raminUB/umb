@@ -221,6 +221,7 @@ function create_config( )
     "lock_gif",
     "lock_emoji",
     "lock_sticker",
+    "clink",
     "lock_chat",
     "lock_en",
     "lock_audio",
