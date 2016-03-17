@@ -7,7 +7,7 @@ end
 
 return {
 patterns = {
-"^!ub$"
+"^!unlimited$"
 
 },
 run = run
