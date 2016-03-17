@@ -1,6 +1,6 @@
 local function run(msg)
  if msg.text == "!help" and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and not is_momod(msg) and is_group(msg) then
-         return "Hi member "..string.gsub(msg.from.print_name, "_", " ").."\n you can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+         return "Hi member "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
@@ -43,7 +43,7 @@ filter word [کلمات بلاک شده در گروه]-by mods
 ]]
 end
 if msg.text == "!help" and is_momod2(msg) and is_group(msg) then
-return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\n you can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
@@ -123,7 +123,7 @@ filter word [کلمات بلاک شده در گروه]-by mods
 ]]
 end
 if msg.text == "!help" and is_owner(msg) and is_group(msg) then
-return "Hi owner "..string.gsub(msg.from.print_name, "_", " ").."\nyou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+return "Hi owner "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
@@ -212,7 +212,7 @@ filter word [کلمات بلاک شده در گروه]-by mods
 ]]
 end
 if msg.text == "!help" and is_admin2(msg) and is_group(msg) then
-return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nyou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
@@ -301,7 +301,7 @@ filter word [کلمات بلاک شده در گروه]-by mods
 ]]
 end
  if msg.text == "!help" and is_admin(msg) and is_realm(msg) then
-         return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nyou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی )
+         return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی )
 
 !creategroup [Name]
 Create a group
@@ -367,7 +367,7 @@ This command will send text to [group_id]
 ]]
 end 
 if msg.text == "!help" and is_sudo(msg) then
-         return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nyou can not need to help me".."\nGood luck :D"
+         return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nYou can not need to help me".."\nGood luck :D"
  end
 end
  return {
