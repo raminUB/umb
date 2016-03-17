@@ -5,6 +5,26 @@ local function run(msg)
 !modlist فهرست مدیران
 
 !settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
+group id [ایدی گروه] , your id [ایدی شما]-by all
+lock name [قفل اسم گروه]-by mods
+lock photo [قفل عکس گروه]-by mods 
+lock join [حذف افراد جوین شونده با لینک]-by mods
+lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
+lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
+lock voice [قفل گروه از صداها]-by mods
+lock trash [قفل فحش در گروه]-by mods
+lock emoji [قفل اموجی در گروه]-by mods
+lock film [قفل فیلم در گروه]-by mods
+lock stiker [قفل استیکر در گروه]-by mods
+lock share [قفل اشتراک گذاری شماره]-by mods
+lock english [قفل زبان انگلیسی]-by mods
+lock chat [قفل چت کردن]-by mods
+lock arabic [ قفل زبان عربی و فارسی]-by mods
+lock leave [قفل ترک کردن گروه]-by mods
+lock flood [قفل اسپم در گروه]-by admin
+lock bot [قفل ورود ربات در گروه]-by admin
+group type [نوع گروه]-by bot
+filter word [کلمات بلاک شده در گروه]-by mods
 
 !kickme برای حذف خود از گروه
 
@@ -34,6 +54,26 @@ return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\n you can 
 !about معرفی گروه
 
 !rules قوانین 
+group id [ایدی گروه] , your id [ایدی شما]-by all
+lock name [قفل اسم گروه]-by mods
+lock photo [قفل عکس گروه]-by mods 
+lock join [حذف افراد جوین شونده با لینک]-by mods
+lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
+lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
+lock voice [قفل گروه از صداها]-by mods
+lock trash [قفل فحش در گروه]-by mods
+lock emoji [قفل اموجی در گروه]-by mods
+lock film [قفل فیلم در گروه]-by mods
+lock stiker [قفل استیکر در گروه]-by mods
+lock share [قفل اشتراک گذاری شماره]-by mods
+lock english [قفل زبان انگلیسی]-by mods
+lock chat [قفل چت کردن]-by mods
+lock arabic [ قفل زبان عربی و فارسی]-by mods
+lock leave [قفل ترک کردن گروه]-by mods
+lock flood [قفل اسپم در گروه]-by admin
+lock bot [قفل ورود ربات در گروه]-by admin
+group type [نوع گروه]-by bot
+filter word [کلمات بلاک شده در گروه]-by mods
 
 !id (reply) ایدی عددی گروه و باریپلی روی فردی ایدی عددی فرد 
 
@@ -56,15 +96,11 @@ return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\n you can 
 !about معرفی گروه
 
 !setphoto گذاشتن عکس برای گروه
-
 !setname [name] گذاشتن اسم برای گروه
 
-!lock [member|name|bots|leave] محدود کردن هر یک
-
-!unlock [member|name|bots|leave] لغو مخدودیت هر یک
+!unlock [lockname] باز کردن تنظیمات مربوطه
 
 !set rules <text> گذاشتن قوانین
-
 !set about <text> گذاشتن معرف گروه
 
 !newlink نشاندن لینک جدید 
@@ -92,6 +128,26 @@ return "Hi owner "..string.gsub(msg.from.print_name, "_", " ").."\nyou can see h
 !modlist فهرست مدیران
 
 !settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
+group id [ایدی گروه] , your id [ایدی شما]-by all
+lock name [قفل اسم گروه]-by mods
+lock photo [قفل عکس گروه]-by mods 
+lock join [حذف افراد جوین شونده با لینک]-by mods
+lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
+lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
+lock voice [قفل گروه از صداها]-by mods
+lock trash [قفل فحش در گروه]-by mods
+lock emoji [قفل اموجی در گروه]-by mods
+lock film [قفل فیلم در گروه]-by mods
+lock stiker [قفل استیکر در گروه]-by mods
+lock share [قفل اشتراک گذاری شماره]-by mods
+lock english [قفل زبان انگلیسی]-by mods
+lock chat [قفل چت کردن]-by mods
+lock arabic [ قفل زبان عربی و فارسی]-by mods
+lock leave [قفل ترک کردن گروه]-by mods
+lock flood [قفل اسپم در گروه]-by admin
+lock bot [قفل ورود ربات در گروه]-by admin
+group type [نوع گروه]-by bot
+filter word [کلمات بلاک شده در گروه]-by mods
 
 !kickme برای حذف خود از گروه
 
@@ -123,9 +179,7 @@ return "Hi owner "..string.gsub(msg.from.print_name, "_", " ").."\nyou can see h
 
 !setname [name] گذاشتن اسم برای گروه
 
-!lock [member|name|bots|leave] محدود کردن هر یک
-
-!unlock [member|name|bots|leave] لغو مخدودیت هر یک
+!unlock [member|name|bots|leave,...] لغو محدودیت هر یک
 
 !set rules <text> گذاشتن قوانین
 
@@ -163,6 +217,26 @@ return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nyou can se
 !modlist فهرست مدیران
 
 !settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
+group id [ایدی گروه] , your id [ایدی شما]-by all
+lock name [قفل اسم گروه]-by mods
+lock photo [قفل عکس گروه]-by mods 
+lock join [حذف افراد جوین شونده با لینک]-by mods
+lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
+lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
+lock voice [قفل گروه از صداها]-by mods
+lock trash [قفل فحش در گروه]-by mods
+lock emoji [قفل اموجی در گروه]-by mods
+lock film [قفل فیلم در گروه]-by mods
+lock stiker [قفل استیکر در گروه]-by mods
+lock share [قفل اشتراک گذاری شماره]-by mods
+lock english [قفل زبان انگلیسی]-by mods
+lock chat [قفل چت کردن]-by mods
+lock arabic [ قفل زبان عربی و فارسی]-by mods
+lock leave [قفل ترک کردن گروه]-by mods
+lock flood [قفل اسپم در گروه]-by admin
+lock bot [قفل ورود ربات در گروه]-by admin
+group type [نوع گروه]-by bot
+filter word [کلمات بلاک شده در گروه]-by mods
 
 !kickme برای حذف خود از گروه
 
@@ -194,9 +268,7 @@ return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nyou can se
 
 !setname [name] گذاشتن اسم برای گروه
 
-!lock [member|name|bots|leave] محدود کردن هر یک
-
-!unlock [member|name|bots|leave] لغو مخدودیت هر یک
+!unlock [member|name|bots|leave,...] لغو محدودیت هر یک
 
 !set rules <text> گذاشتن قوانین
 
@@ -260,12 +332,6 @@ Get a file of members in group/realm
 
 !type
 Get group type
-
-!kill chat [GroupID]
-Kick all memebers and delete group
-
-!kill realm [RealmID]
-Kick all members and delete realm
 
 !addadmin [id|username]
 Promote an admin by id OR username *Sudo only
