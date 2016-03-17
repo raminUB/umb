@@ -889,7 +889,7 @@ local function unlock_group_leave(msg, data, target)
 end
 
 local function unlock_group_photomod(msg, data, target)
-  if not is_momod(msg) then
+  if not is_momod(msg.from.id) then
     return "For moderators only!"
   end
   local group_photo_lock = data[tostring(target)]['settings']['lock_photo']
@@ -974,7 +974,7 @@ end
 local function set_group_photo(msg, success, result)
   local data = load_data(_config.moderation.data)
   local receiver = get_receiver(msg)
-  if success then
+  if success and is_momod(msg.from.id) then
     local file = 'data/photos/chat_photo_'..msg.to.id..'.jpg'
     print('File downloaded to:', result)
     os.rename(result, file)
@@ -1199,14 +1199,14 @@ local function run(msg, matches)
   end
   if matches[1] == 'add' and not matches[2] then
     if is_realm(msg) then
-       return 'Error: Already a realm.'
+       return 'Already a realm.'
     end
     print("group "..msg.to.print_name.."("..msg.to.id..") added")
     return modadd(msg)
   end
    if matches[1] == 'add' and matches[2] == 'realm' then
     if is_group(msg) then
-       return 'Error: Already a group.'
+       return 'Already a group.'
     end
     print("group "..msg.to.print_name.."("..msg.to.id..") added as a realm")
     return realmadd(msg)
@@ -1236,6 +1236,7 @@ local function run(msg, matches)
       local user = 'user#id'..msg.action.user.id
       local chat = 'chat#id'..msg.to.id
       if group_member_lock == 'yes' and not is_owner2(msg.action.user.id, msg.to.id) then
+      	send_large_msg(get_receiver(msg), "Group add member is lock ")
         chat_del_user(chat, user, ok_cb, true)
       elseif group_member_lock == 'yes' and tonumber(msg.from.id) == tonumber(our_id) then
         return nil
@@ -1245,7 +1246,7 @@ local function run(msg, matches)
     end
     if matches[1] == 'chat_del_user' then
       if not msg.service then
-         -- return "Are you trying to troll me?"
+         return "Are you trying to troll me?"
       end
       local user = 'user#id'..msg.action.user.id
       local chat = 'chat#id'..msg.to.id
@@ -1257,23 +1258,23 @@ local function run(msg, matches)
       end
       local group_photo_lock = settings.lock_photo
       if group_photo_lock == 'yes' then
+      	send_large_msg(get_receiver(msg), "Group photo is lock ")
         local picturehash = 'picture:changed:'..msg.to.id..':'..msg.from.id
         redis:incr(picturehash)
         ---
         local picturehash = 'picture:changed:'..msg.to.id..':'..msg.from.id
         local picprotectionredis = redis:get(picturehash) 
         if picprotectionredis then 
-          if tonumber(picprotectionredis) == 4 and not is_owner(msg) then 
+          if tonumber(picprotectionredis) == 2 and not is_momod(msg) then 
             kick_user(msg.from.id, msg.to.id)
           end
-          if tonumber(picprotectionredis) ==  8 and not is_owner(msg) then 
+          if tonumber(picprotectionredis) == 3 and not is_momod(msg) then 
             ban_user(msg.from.id, msg.to.id)
+            send_large_msg(get_receiver(msg), "Group photo is lock and you banned ")
             local picturehash = 'picture:changed:'..msg.to.id..':'..msg.from.id
             redis:set(picturehash, 0)
           end
         end
-        
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] tried to deleted picture but failed  ")
         chat_set_photo(receiver, settings.set_photo, ok_cb, false)
       elseif group_photo_lock == 'no' then
         return nil
@@ -1285,23 +1286,23 @@ local function run(msg, matches)
       end
       local group_photo_lock = settings.lock_photo
       if group_photo_lock == 'yes' then
+      	send_large_msg(get_receiver(msg), "Group photo is lock ")
         local picturehash = 'picture:changed:'..msg.to.id..':'..msg.from.id
         redis:incr(picturehash)
         ---
         local picturehash = 'picture:changed:'..msg.to.id..':'..msg.from.id
         local picprotectionredis = redis:get(picturehash) 
         if picprotectionredis then 
-          if tonumber(picprotectionredis) == 4 and not is_owner(msg) then 
+          if tonumber(picprotectionredis) == 2 and not is_momod(msg) then 
             kick_user(msg.from.id, msg.to.id)
           end
-          if tonumber(picprotectionredis) ==  8 and not is_owner(msg) then 
+          if tonumber(picprotectionredis) == 3 and not is_momod(msg) then 
             ban_user(msg.from.id, msg.to.id)
+            send_large_msg(get_receiver(msg), "Group photo is lock and you banned ")
           local picturehash = 'picture:changed:'..msg.to.id..':'..msg.from.id
           redis:set(picturehash, 0)
           end
         end
-        
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] tried to change picture but failed  ")
         chat_set_photo(receiver, settings.set_photo, ok_cb, false)
       elseif group_photo_lock == 'no' then
         return nil
@@ -1315,23 +1316,22 @@ local function run(msg, matches)
       local group_name_lock = settings.lock_name
       local to_rename = 'chat#id'..msg.to.id
       if group_name_lock == 'yes' then
+      	send_large_msg(get_receiver(msg), "Group name is lock ")
         if group_name_set ~= tostring(msg.to.print_name) then
           local namehash = 'name:changed:'..msg.to.id..':'..msg.from.id
           redis:incr(namehash)
           local namehash = 'name:changed:'..msg.to.id..':'..msg.from.id
           local nameprotectionredis = redis:get(namehash) 
           if nameprotectionredis then 
-            if tonumber(nameprotectionredis) == 4 and not is_owner(msg) then 
+            if tonumber(nameprotectionredis) == 2 and not is_momod(msg) then 
               kick_user(msg.from.id, msg.to.id)
             end
-            if tonumber(nameprotectionredis) ==  8 and not is_owner(msg) then 
+            if tonumber(nameprotectionredis) == 3 and not is_momod(msg) then 
               ban_user(msg.from.id, msg.to.id)
               local namehash = 'name:changed:'..msg.to.id..':'..msg.from.id
               redis:set(namehash, 0)
             end
           end
-          
-          savelog(msg.to.id, name_log.." ["..msg.from.id.."] tried to change name but failed  ")
           rename_chat(to_rename, group_name_set, ok_cb, false)
         end
       elseif group_name_lock == 'no' then
@@ -1345,10 +1345,9 @@ local function run(msg, matches)
       local group_name_set = data[tostring(msg.to.id)]['settings']['set_name']
       local to_rename = 'chat#id'..msg.to.id
       rename_chat(to_rename, group_name_set, ok_cb, false)
-      
       savelog(msg.to.id, "Group { "..msg.to.print_name.." }  name changed to [ "..new_name.." ] by "..name_log.." ["..msg.from.id.."]")
     end
-    if matches[1] == 'setphoto' and is_momod(msg) then
+    if matches[1] == 'setphoto' and is_momod(msg.from.id) then
       data[tostring(msg.to.id)]['settings']['set_photo'] = 'waiting'
       save_data(_config.moderation.data, data)
       return 'Please send me new group photo now'
@@ -1633,7 +1632,7 @@ local function run(msg, matches)
         return "Create a link using /newlink first !"
       end
        savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group link ["..group_link.."]")
-      return "Group link:\n"..group_link
+      return ""..string.gsub(msg.to.print_name, "_", " ").." link :\n"..group_link
     end
     if matches[1] == 'setowner' and matches[2] then
       if not is_owner(msg) then
@@ -1690,8 +1689,8 @@ local function run(msg, matches)
         return "Only owner can clean"
       end
       if matches[2] == 'member' then
-        if not is_owner(msg) then
-          return "Only admins can clean members"
+        if not is_sudo(msg) then
+          return "Only sudo can clean members"
         end
         local receiver = get_receiver(msg)
         chat_info(receiver, cleanmember, {receiver=receiver})
@@ -1703,6 +1702,7 @@ local function run(msg, matches)
         local message = '\nList of moderators for ' .. string.gsub(msg.to.print_name, '_', ' ') .. ':\n'
         for k,v in pairs(data[tostring(msg.to.id)]['moderators']) do
           data[tostring(msg.to.id)]['moderators'][tostring(k)] = nil
+          send_large_msg(get_receiver(msg), "successful!")
           save_data(_config.moderation.data, data)
         end
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] cleaned modlist")
@@ -1711,12 +1711,14 @@ local function run(msg, matches)
         local data_cat = 'rules'
         data[tostring(msg.to.id)][data_cat] = nil
         save_data(_config.moderation.data, data)
+        send_large_msg(get_receiver(msg), "successful!")
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] cleaned rules")
       end
       if matches[2] == 'about' then 
         local data_cat = 'description'
         data[tostring(msg.to.id)][data_cat] = nil
         save_data(_config.moderation.data, data)
+        send_large_msg(get_receiver(msg), "successful!")
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] cleaned about")
       end     
     end
@@ -1753,7 +1755,7 @@ local function run(msg, matches)
       savelog(msg.to.id, name_log.." ["..msg.from.id.."] Used /help")
       return help()
     end
-    if matches[1] == 'res' and is_momod(msg) then 
+    if matches[1] == 'res' or 'id' then 
       local cbres_extra = {
         chatid = msg.to.id
       }
