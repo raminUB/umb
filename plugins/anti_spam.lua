@@ -75,6 +75,7 @@ local function pre_process(msg)
       if kicktable[user] == true then
         return
       end
+      kick_user(user, chat)
       send_large_msg(get_receiver(msg), "User @" .. msg.from.username .. " don't spamming!")
       kick_user(user, chat)
       local name = user_print_name(msg.from)
@@ -87,7 +88,7 @@ local function pre_process(msg)
       local gbanspamonredis = redis:get(gbanspam)
       --Check if user has spammed is group more than 2 times  
       if gbanspamonredis then
-        if tonumber(gbanspamonredis) == 3 and not is_momod(msg) then
+        if tonumber(gbanspamonredis) == 4 and not is_momod(msg) then
           --Global ban that user
           banall_user(msg.from.id)
           local gbanspam = 'gban:spam'..msg.from.id
