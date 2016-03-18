@@ -1382,7 +1382,7 @@ local function run(msg, matches)
       rename_chat(to_rename, group_name_set, ok_cb, false)
       savelog(msg.to.id, "Group { "..msg.to.print_name.." }  name changed to [ "..new_name.." ] by "..name_log.." ["..msg.from.id.."]")
     end
-    if matches[1] == 'setphoto' and is_momod(msg.from.id) then
+    if matches[1] == 'setphoto' and is_momod(msg) then
       data[tostring(msg.to.id)]['settings']['set_photo'] = 'waiting'
       save_data(_config.moderation.data, data)
       return 'Please send me new group photo now'
@@ -1397,7 +1397,7 @@ local function run(msg, matches)
     end
     if matches[1] == 'promote' and matches[2] then
       if not is_momod(msg) then
-        return
+        return 
       end
       if not is_owner(msg) then
         return "Only owner can promote"
@@ -1423,7 +1423,7 @@ local function run(msg, matches)
     end
     if matches[1] == 'demote' and matches[2] then
       if not is_momod(msg) then
-        return
+        return 
       end
       if not is_owner(msg) then
         return "Only owner can demote"
