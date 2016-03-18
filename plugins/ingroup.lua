@@ -1009,7 +1009,7 @@ end
 local function set_group_photo(msg, success, result)
   local data = load_data(_config.moderation.data)
   local receiver = get_receiver(msg)
-  if success and is_momod(msg.from.id) then
+  if success then
     local file = 'data/photos/chat_photo_'..msg.to.id..'.jpg'
     print('File downloaded to:', result)
     os.rename(result, file)
@@ -1473,7 +1473,7 @@ local function run(msg, matches)
       local target = msg.to.id
        if matches[2] == 'tag' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
-        return lock_group_tag(msg, data, target)
+        return lock_group_adstag(msg, data, target)
       end
       if matches[2] == 'trash' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked trash ")
@@ -1493,7 +1493,7 @@ local function run(msg, matches)
       end
       if matches[2] == 'file' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked file ")
-        return lock_group_file(msg, data, target)
+        return lock_group_gif(msg, data, target)
       end
       if matches[2] == 'image' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked image ")
@@ -1510,10 +1510,6 @@ local function run(msg, matches)
       if matches[2] == 'voice' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked audio ")
         return lock_group_audio(msg, data, target)
-      end
-      if matches[2] == 'chat' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked tag ")
-        return lock_group_chat(msg, data, target)
       end
        if matches[2] == 'link' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adslink ")
@@ -1571,16 +1567,16 @@ local function run(msg, matches)
         return unlock_group_share(msg, data, target)
       end
       if matches[2] == 'film' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked films ")
-        return unlock_group_film(msg, data, target)
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked video ")
+        return unlock_group_video(msg, data, target)
       end
        if matches[2] == 'image' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked imags ")
         return unlock_group_ax(msg, data, target)
       end
-       if matches[2] == 'chat' then
-        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked chat ")
-        return unlock_group_chat(msg, data, target)
+       if matches[2] == 'trash' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked trash ")
+        return unlock_group_trash(msg, data, target)
       end
        if matches[2] == 'english' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked english ")
