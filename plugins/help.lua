@@ -1,3 +1,4 @@
+
 local function run(msg)
  if msg.text == "!help" and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and not is_momod(msg) and is_group(msg) then
          return "Hi member "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
@@ -42,8 +43,8 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 ]]
 end
-if msg.text == "!help" and is_momod2(msg) and is_group(msg) then
-return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+if msg.text == "!help"  and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and is_momod(msg) and is_group(msg) then
+return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[
 
 !modlist فهرست مدیران
 
@@ -122,7 +123,7 @@ filter word [کلمات بلاک شده در گروه]-by mods
 قبل از دادن دستور حتما از / یا ! استفاده کنید
 ]]
 end
-if msg.text == "!help" and is_owner(msg) and is_group(msg) then
+if msg.text == "!help" and not is_sudo(msg) and is_owner(msg) and not is_admin(msg) and is_group(msg) then
 return "Hi owner "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
@@ -211,7 +212,7 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 ]]
 end
-if msg.text == "!help" and is_admin2(msg) and is_group(msg) then
+if msg.text == "!help" and is_admin(msg) and not is_sudo(msg)  and is_group(msg) then
 return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
@@ -374,7 +375,7 @@ end
 	description = "Chat With Robot Server",
 	usage = "chat with robot",
 	patterns = {
-		"^!help$"
+             "^!help$",
 },
 	run = run,
      --privileged = true,
