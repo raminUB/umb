@@ -368,7 +368,7 @@ This command will send text to [group_id]
 ]]
 end 
 if msg.text == "!help" and is_sudo(msg) then
-         return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nYou can not need to help me".."\nGood luck :D"
+         return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nYou do not need my help".."\nGood luck :D"
  end
 end
  return {
