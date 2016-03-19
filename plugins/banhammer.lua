@@ -21,7 +21,7 @@ local function pre_process(msg)
       print('Checking invited user '..user_id)
       local banned = is_banned(user_id, msg.to.id)
       if banned or is_gbanned(user_id) then
-        send_large_msg(get_receiver(msg), "You".." is banned or globaly banned!,you need to help us and request to @ub_sup_bot.")
+        send_large_msg(get_receiver(msg), "You @"..msg.from.username .." are banned or globally banned!,you need to help us and request to @ub_sup_bot.")
         print('User is banned!')
         local name = user_print_name(msg.from)
          savelog(msg.to.id, name.." ["..msg.from.id.."] added a banned user >"..msg.action.user.id)-- Save to logs
@@ -31,10 +31,10 @@ local function pre_process(msg)
         local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
         local banaddredis = redis:get(banhash) 
         if banaddredis then 
-          if tonumber(banaddredis) == 2 and not is_owner(msg) then 
+          if tonumber(banaddredis) == 2 and not is_momod(msg) then 
             kick_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 3 times
           end
-          if tonumber(banaddredis) == 3 and not is_owner(msg) then 
+          if tonumber(banaddredis) == 3 and not is_momod(msg) then 
             ban_user(msg.from.id, msg.to.id)-- Kick user who adds ban ppl more than 7 times
             local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
             redis:set(banhash, 0)-- Reset the Counter
