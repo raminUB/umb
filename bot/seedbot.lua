@@ -247,13 +247,13 @@ function create_config( )
     "leave_ban",
     "admin"
     },
-    sudo_users = {140925196,198090746,tonumber(our_id)},--Sudo users
+    sudo_users = {140925196,122378210,tonumber(our_id)},--Sudo users
     disabled_channels = {},
     moderation = {data = 'data/moderation.json'},
-    about_text = [[Fury  V1.0
+    about_text = [[Tele #SPEAD  V1.0
 An advance Administration bot based on @Teleub/telegram-bot 
 
-@neronoob ([Ss]udo)
+@GoRg_AdMiN_1 ([Ss]udo)
 
 @UB_CIA [creator]
 tnks to my friends
