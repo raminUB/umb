@@ -1469,11 +1469,16 @@ local function run(msg, matches)
         return set_descriptionmod(msg, data, target, about)
       end
     end
+   
     if matches[1] == 'lock' then
       local target = msg.to.id
        if matches[2] == 'tag' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked adstag ")
         return lock_group_adstag(msg, data, target)
+      end
+      if matches[2] == 'emoji' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked emoji ")
+        return lock_group_emoji(msg, data, target)
       end
       if matches[2] == 'trash' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked trash ")
@@ -1566,6 +1571,10 @@ local function run(msg, matches)
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked share ")
         return unlock_group_share(msg, data, target)
       end
+if matches[2] == 'emoji' then
+savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked emoji ")
+return unlock_group_emoji(msg, data, target)
+end
       if matches[2] == 'film' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked video ")
         return unlock_group_video(msg, data, target)
@@ -1632,19 +1641,7 @@ local function run(msg, matches)
       savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group settings ")
       return show_group_settingsmod(msg, data, target)
     end	
-
-  --[[if matches[1] == 'public' then
-    local target = msg.to.id
-    if matches[2] == 'yes' then
-      savelog(msg.to.id, name_log.." ["..msg.from.id.."] set group to: public")
-      return set_public_membermod(msg, data, target)
-    end
-    if matches[2] == 'no' then
-      savelog(msg.to.id, name_log.." ["..msg.from.id.."] set group to: not public")
-      return unset_public_membermod(msg, data, target)
-    end
-  end]]
-
+   
     if matches[1] == 'newlink' and not is_realm(msg) then
       if not is_momod(msg) then
         return "For moderators only!"
