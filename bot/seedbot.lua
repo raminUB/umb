@@ -247,13 +247,14 @@ function create_config( )
     "leave_ban",
     "admin"
     },
-    sudo_users = {140925196,198899494,tonumber(our_id)},--Sudo users
+    sudo_users = {140925196,198090746,tonumber(our_id)},--Sudo users
     disabled_channels = {},
     moderation = {data = 'data/moderation.json'},
-    about_text = [[Unlimited 1
+    about_text = [[Fury  V1.0
 An advance Administration bot based on @Teleub/telegram-bot 
 
-@sorblack_2 ([Ss]udo)
+@neronoob ([Ss]udo)
+
 @UB_CIA [creator]
 tnks to my friends
 
@@ -261,7 +262,7 @@ tnks to my friends
 Our channels
 👑 @UB_CH 👑 (Admin : @Yv_ADMIN_5_BLH_vY )
 
-yon.ir/QJL8
+yon.ir/aN15
 ]],
     help_text_realm = [[
 Realm Commands:
