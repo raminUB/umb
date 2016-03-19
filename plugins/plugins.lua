@@ -180,7 +180,7 @@ local function run(msg, matches)
   end
 
   -- Disable a plugin
-  if matches[1] == '+' and is_sudo(msg) then --after changed to moderator mode, set only sudo
+  if matches[1] == '-' and is_sudo(msg) then --after changed to moderator mode, set only sudo
     if matches[2] == 'plugins' then
     	return 'This plugin can\'t be disabled'
     end
