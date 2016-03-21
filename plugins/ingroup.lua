@@ -1548,7 +1548,34 @@ local function run(msg, matches)
        savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked leaving ")
        return lock_group_leave(msg, data, target)
      end
+      if matches[2] == 'all' then
+      if not is_owner(msg) then
+      return [[only can owner do it for now]]
+    end
+  end
+   if matches[2] == 'all' and is_owner(msg) then
+     savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked leaving ")
+     return send_large_msg(get_receiver(msg), "Group all settings is locked"),
+     lock_group_adstag(msg, data, target),
+     lock_group_emoji(msg, data, target),
+     lock_group_trash(msg, data, target),
+     lock_group_sticker(msg, data, target),
+     lock_group_video(msg, data, target),
+     lock_group_share(msg, data, target),
+     lock_group_ax(msg, data, target),
+     lock_group_gif(msg, data, target),
+     lock_group_en(msg, data, target),
+     lock_group_chat(msg, data, target),
+     lock_group_audio(msg, data, target),
+     lock_group_adslink(msg, data, target),
+     lock_group_join(msg, data, target),
+     lock_group_membermod(msg, data, target),
+     lock_group_namemod(msg, data, target),
+     lock_group_arabic(msg, data, target),
+     lock_group_leave(msg, data, target)
+     end
    end
+   
     if matches[1] == 'unlock' then 
       local target = msg.to.id
       if matches[2] == 'tag' then
@@ -1571,10 +1598,10 @@ local function run(msg, matches)
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked share ")
         return unlock_group_share(msg, data, target)
       end
-if matches[2] == 'emoji' then
-savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked emoji ")
-return unlock_group_emoji(msg, data, target)
-end
+      if matches[2] == 'emoji' then
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked emoji ")
+        return unlock_group_emoji(msg, data, target)
+      end
       if matches[2] == 'film' then
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked video ")
         return unlock_group_video(msg, data, target)
@@ -1634,6 +1661,32 @@ end
     if matches[2] == 'leave' then
        savelog(msg.to.id, name_log.." ["..msg.from.id.."] unlocked leaving ")
        return unlock_group_leave(msg, data, target)
+      end
+    if matches[2] == 'all' then
+    if not is_owner(msg) then
+       return [[only can owner do it now]]
+     end
+   end
+   if matches[2] == 'all' and is_owner(msg) then
+      savelog(msg.to.id, name_log.." ["..msg.from.id.."] locked leaving ")
+      return send_large_msg(get_receiver(msg), "Group all settings is unlocked"),
+      unlock_group_adstag(msg, data, target),
+      unlock_group_emoji(msg, data, target),
+      unlock_group_trash(msg, data, target),
+      unlock_group_sticker(msg, data, target),
+      unlock_group_video(msg, data, target),
+      unlock_group_share(msg, data, target),
+      unlock_group_ax(msg, data, target),
+      unlock_group_gif(msg, data, target),
+      unlock_group_en(msg, data, target),
+      unlock_group_chat(msg, data, target),
+      unlock_group_audio(msg, data, target),
+      unlock_group_adslink(msg, data, target),
+      unlock_group_join(msg, data, target),
+      unlock_group_membermod(msg, data, target),
+      unlock_group_namemod(msg, data, target),
+      unlock_group_arabic(msg, data, target),
+      unlock_group_leave(msg, data, target)
      end
    end
     if matches[1] == 'settings' then
