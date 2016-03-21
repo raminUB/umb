@@ -1791,7 +1791,7 @@ end
       savelog(msg.to.id, name_log.." ["..msg.from.id.."] Used /help")
       return help()
     end
-    if matches[1] == 'res' or 'id' then 
+    if matches[1] == 'res' then 
       local cbres_extra = {
         chatid = msg.to.id
       }
@@ -1848,7 +1848,6 @@ return {
   "^[!/](modlist)$",
   "^[!/](newlink)$",
   "^[!/](link)$",
-  "^[!/](id) (.*)$",
   "^[!/](kickinactive)$",
   "^[!/](kickinactive) (%d+)$",
   "%[(photo)%]",
