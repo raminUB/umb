@@ -1,6 +1,6 @@
 
-local function run(msg)
- if msg.text == "!help" and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and not is_momod(msg) and is_group(msg) then
+local function run(msg, matches)
+ if matches[1]:lower() == "help" and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and not is_momod(msg) and is_group(msg) then
          return "Hi member "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
@@ -39,11 +39,15 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 !res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
 
-قبل از دادن دستور حتما از / یا ! استفاده کنید
+!feedback ارسال نظر به سودو(ها(
 
+[اینکیه یا in kie (by reply)] برای دانستن مقام شخص
+
+!share شماره ربات
+قبل از دادن دستور حتما از / یا ! استفاده کنید
 ]]
 end
-if msg.text == "!help"  and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and is_momod(msg) and is_group(msg) then
+if matches[1]:lower() == "help"  and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and is_momod(msg) and is_group(msg) then
 return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[
 
 !modlist فهرست مدیران
@@ -81,6 +85,12 @@ filter word [کلمات بلاک شده در گروه]-by mods
 !owner دانستن صاحب گروه
 
 !res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
+
+!feedback ارسال نظر به سودو(ها(
+
+[اینکیه یا in kie (by reply)] برای دانستن مقام شخص
+
+!share شماره ربات
 
 !kick (reply) [ @username|id]  حذف شخص با ریپلی و ایدی
 
@@ -123,7 +133,7 @@ filter word [کلمات بلاک شده در گروه]-by mods
 قبل از دادن دستور حتما از / یا ! استفاده کنید
 ]]
 end
-if msg.text == "!help" and not is_sudo(msg) and is_owner(msg) and not is_admin(msg) and is_group(msg) then
+if matches[1]:lower() == "help" and not is_sudo(msg) and is_owner(msg) and not is_admin(msg) and is_group(msg) then
 return "Hi owner "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
@@ -162,6 +172,12 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 !res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
 
+!feedback ارسال نظر به سودو(ها( 
+
+[اینکیه یا in kie (by reply)] برای دانستن مقام شخص
+
+!share شماره ربات
+
 !kick (reply) [ @username|id]  حذف شخص با ریپلی و ایدی
 
 !ban (reply) [ @username|id] مسدود کردن با ریپلی و ایدی
@@ -209,10 +225,9 @@ filter word [کلمات بلاک شده در گروه]-by mods
 !yesall برای فعالکردن تمام قفل ها
 
 قبل از دادن دستور حتما از / یا ! استفاده کنید
-
 ]]
 end
-if msg.text == "!help" and is_admin(msg) and not is_sudo(msg)  and is_group(msg) then
+if matches[1]:lower() == "help" and is_admin(msg) and not is_sudo(msg)  and is_group(msg) then
 return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
@@ -251,6 +266,12 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 !res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
 
+!feedback ارسال نظر به سودو(ها(
+
+[اینکیه یا in kie (by reply)] برای دانستن مقام شخص
+
+!share شماره ربات
+
 !kick (reply) [ @username|id]  حذف شخص با ریپلی و ایدی
 
 !ban (reply) [ @username|id] مسدود کردن با ریپلی و ایدی
@@ -293,15 +314,13 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 !clean [modlist|rules|about] پاک کردن هر یک
 
-!noall برای غیر فعال کردن تمام قفل ها
+!banall [ @username|id|reply] برای مسدود سازی جهانی افراد
 
-!yesall برای فعالکردن تمام قفل ها
-
+!unbanall [ @username|id|reply]رفع مسدودیت جهانی
 قبل از دادن دستور حتما از / یا ! استفاده کنید
-
 ]]
 end
- if msg.text == "!help" and is_admin(msg) and is_realm(msg) then
+ if matches[1]:lower() == "help" and is_admin(msg) and is_realm(msg) then
          return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی )
 
 !creategroup [Name]
@@ -367,7 +386,7 @@ This command will send text to [group_id]
 
 ]]
 end 
-if msg.text == "!help" and is_sudo(msg) then
+if matches[1]:lower() == "help" and is_sudo(msg) then
          return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nYou do not need my help".."\nGood luck :D"
  end
 end
@@ -375,7 +394,8 @@ end
 	description = "Chat With Robot Server",
 	usage = "chat with robot",
 	patterns = {
-             "^!help$",
+        "^[!/#]([Hh]elp)$",
+        "^[Hh]elp$"
 },
 	run = run,
      --privileged = true,
