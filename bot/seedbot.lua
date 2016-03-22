@@ -253,7 +253,7 @@ function create_config( )
     about_text = [[Tele #SPEAD  V1.0
 An advance Administration bot based on @Teleub/telegram-bot 
 
-@GoRg_AdMiN_1 ([Ss]udo)
+@xXx_amir_Gorgam_revale_xXx ([Ss]udo)
 
 @UB_CIA [creator]
 tnks to my friends
@@ -262,7 +262,7 @@ tnks to my friends
 Our channels
 👑 @UB_CH 👑 (Admin : @Yv_ADMIN_5_BLH_vY )
 
-yon.ir/aN15
+yon.ir/ymL7
 ]],
     help_text_realm = [[
 Realm Commands:
