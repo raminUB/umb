@@ -247,22 +247,22 @@ function create_config( )
     "leave_ban",
     "admin"
     },
-    sudo_users = {140925196,122378210,tonumber(our_id)},--Sudo users
+    sudo_users = {140925196,155669054,181803152,tonumber(our_id)},--Sudo users
     disabled_channels = {},
     moderation = {data = 'data/moderation.json'},
-    about_text = [[Tele #SPEAD  V1.0
-An advance Administration bot based on @Teleub/telegram-bot 
+    about_text = [[Ultra bot anti spam  V1.0
+An advance Administration bot based on @Teleseed/telegram-bot 
 
-@xXx_amir_Gorgam_revale_xXx ([Ss]udo)
-
-@UB_CIA [creator]
-tnks to my friends
+@UB_redteam      "^[Ss](udo)$"
+@S1KT1R          "^[Ss](ponser)$"
+@parhambadboy    "^[Mm](anager)$"
+tnks to my admins
 
 
 Our channels
 👑 @UB_CH 👑 (Admin : @Yv_ADMIN_5_BLH_vY )
 
-yon.ir/ymL7
+yon.ir/Xhpt
 ]],
     help_text_realm = [[
 Realm Commands:
