@@ -11,9 +11,7 @@ local function pre_process(msg)
       if banned or is_gbanned(user_id) then -- Check it with redis
       print('User is banned!')
       local name = user_print_name(msg.from)
-      savelog(msg.to.id, name.." ["..msg.from.id.."] is banned and kicked ! ")-- Save to logs
       kick_user(user_id, msg.to.id)
-      send_large_msg(get_receiver(msg), "You @"..msg.from.username .." are banned or globally banned!,you need to help us and request to @ub_sup_bot.")
       end
     end
     -- Check if banned user joins chat
@@ -26,7 +24,6 @@ local function pre_process(msg)
         local name = user_print_name(msg.from)
          savelog(msg.to.id, name.." ["..msg.from.id.."] added a banned user >"..msg.action.user.id)-- Save to logs
         kick_user(user_id, msg.to.id)
-        send_large_msg(get_receiver(msg), "You @"..msg.from.username .." are banned or globally banned!,you need to help us and request to @ub_sup_bot.")
         local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
         redis:incr(banhash)
         local banhash = 'addedbanuser:'..msg.to.id..':'..msg.from.id
@@ -42,14 +39,7 @@ local function pre_process(msg)
           end
         end
       end
-     if data[tostring(msg.to.id)] then
-       if data[tostring(msg.to.id)]['settings'] then
-         if data[tostring(msg.to.id)]['settings']['lock_bots'] then 
-           bots_protection = data[tostring(msg.to.id)]['settings']['lock_bots']
-          end
-        end
-      end
-    local bots_protection = "Yes"
+      local bots_protection = "Yes"
       local data = load_data(_config.moderation.data)
       if data[tostring(msg.to.id)]['settings']['lock_bots'] then
         bots_protection = data[tostring(msg.to.id)]['settings']['lock_bots']
@@ -57,7 +47,6 @@ local function pre_process(msg)
     if msg.action.user.username ~= nil then
       if string.sub(msg.action.user.username:lower(), -3) == 'bot' and not is_admin(msg) and bots_protection == "yes" then --- Will kick bots added by normal users
         local name = user_print_name(msg.from)
-          savelog(msg.to.id, name.." ["..msg.from.id.."] added a bot > @".. msg.action.user.username)-- Save to logs
           kick_user(msg.action.user.id, msg.to.id)
           ban_user(msg.action.user.id, msg.to.id)
       end
@@ -71,19 +60,17 @@ local function pre_process(msg)
     local data = load_data(_config.moderation.data)
     local group = msg.to.id
     local texttext = 'groups'
-    --if not data[tostring(texttext)][tostring(msg.to.id)] and not is_sudo(msg) or not is_realm(msg) then -- Check if this group is one of my groups or not
-    --chat_del_user('chat#id'..msg.to.id,'user#id'..our_id,ok_cb,false)
-    --block_user("user#id"..msg.from.id,ok_cb,false)
-    --return 
-    --end
+    if not data[tostring(texttext)][tostring(msg.to.id)] and not is_sudo(msg) then -- Check if this group is one of my groups or not
+    chat_del_user('chat#id'..msg.to.id,'user#id'..our_id,ok_cb,false)
+    block_user("user#id"..msg.from.id,ok_cb,false)
+    return 
+    end
     local user_id = msg.from.id
     local chat_id = msg.to.id
     local banned = is_banned(user_id, chat_id)
     if banned or is_gbanned(user_id) then
-      send_large_msg(get_receiver(msg), "User @" .. msg.from.username .. " are banned or globaly banned!,you need to help us and request to @ub_sup_bot.")
       print('Banned user talking!')
       local name = user_print_name(msg.from)
-      savelog(msg.to.id, name.." ["..msg.from.id.."] banned user is talking !")-- Save to logs
       kick_user(user_id, chat_id)
       msg.text = ''
     end
@@ -140,8 +127,8 @@ local function run(msg, matches)
         id = get_message(msg.reply_id,get_message_callback_id, false)
     elseif matches[1]:lower() == 'id' then
       local name = user_print_name(msg.from)
-      --savelog(msg.to.id, name.." ["..msg.from.id.."] used /id ")
-      --return "" ..string.gsub(msg.to.print_name, "_", " ").. " Id : "..msg.to.id  
+      savelog(msg.to.id, name.." ["..msg.from.id.."] used /id ")
+      return "" ..string.gsub(msg.to.print_name, "_", " ").. " Id : "..msg.to.id  
     end
   end
   if matches[1]:lower() == 'kickme' then-- /kickme
