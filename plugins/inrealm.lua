@@ -675,7 +675,6 @@ return {
     "^[!/](removeadmin) (.*)$", -- sudoers only
     "^[!/](list) (.*)$",
     "^[!/](log)$",
-    "^[!/](help)$",
     "^!!tgservice (.+)$",
   },
   run = run
