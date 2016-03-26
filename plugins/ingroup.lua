@@ -1128,15 +1128,19 @@ local function modlist(msg)
   return message
 end
 
-local function callbackres(extra, success, result)
---vardump(result)
+local function callbackres(extra, success, result) -- Callback for res_user in line 27
   local user = result.id
-  local name = string.gsub(result.print_name, "_", " ")
   local chat = 'chat#id'..extra.chatid
-  send_large_msg(chat, user)
-  return user
+        if is_banned(result.id, extra.chatid) then -- Ignore bans
+        send_large_msg(chat, user..'\nprohibit : banned')
+        elseif is_gbanned(result.id) then
+             send_large_msg(chat, user..'\nprohibit : globaly banned')
+        elseif not is_gbanned(result.id) then
+             send_large_msg(chat, user..'\nprohibit : not inhibitory')
+        elseif not is_banned(result.id, extra.chatid) then
+             send_large_msg(chat, user..'\nprohibit : not inhibitory')
+        end
 end
-
 
 local function help()
   local help_text = tostring(_config.help_text)
