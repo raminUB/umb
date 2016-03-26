@@ -287,7 +287,7 @@ end
         	NUM_MSG_MAX = 4
       	end
     end
-    local bots_protection = "yes"
+    local bots_protection = "Yes"
     if data[tostring(msg.to.id)]['settings']['lock_bots'] then
     	bots_protection = data[tostring(msg.to.id)]['settings']['lock_bots']
    	end
