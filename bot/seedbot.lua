@@ -48,7 +48,7 @@ function msg_valid(msg)
   -- Don't process outgoing messages
   if msg.out then
     print('\27[36mNot valid: msg from us\27[39m')
-    return false
+    return true
   end
 
   -- Before bot was started
@@ -209,7 +209,6 @@ function create_config( )
   config = {
     enabled_plugins = {
     "onservice",
-    "clink",
     "feedback",
     "filter",
     "getplugins",
@@ -264,144 +263,8 @@ Our channels
 
 yon.ir/Xhpt
 ]],
-    help_text_realm = [[
-Realm Commands:
-
-!creategroup [Name]
-Create a group
-
-!createrealm [Name]
-Create a realm
-
-!setname [Name]
-Set realm name
-
-!setabout [GroupID] [Text]
-Set a group's about text
-
-!setrules [GroupID] [Text]
-Set a group's rules
-
-!lock [GroupID] [setting]
-Lock a group's setting
-
-!unlock [GroupID] [setting]
-Unock a group's setting
-
-!wholist
-Get a list of members in group/realm
-
-!who
-Get a file of members in group/realm
-
-!type
-Get group type
-
-!kill chat [GroupID]
-Kick all memebers and delete group
-
-!kill realm [RealmID]
-Kick all members and delete realm
-
-!addadmin [id|username]
-Promote an admin by id OR username *Sudo only
-
-!removeadmin [id|username]
-Demote an admin by id OR username *Sudo only
-
-!list groups
-Get a list of all groups
-
-!list realms
-Get a list of all realms
-
-!log
-Grt a logfile of current group or realm
-
-!broadcast [text]
-!broadcast Hello !
-Send text to all groups
-Only sudo users can run this command
-
-!bc [group_id] [text]
-!bc 123456789 Hello !
-This command will send text to [group_id]
-
-
-**U can use both "/" and "!" 
-
-
-*Only admins and sudo can add bots in group
-
-
-*Only admins and sudo can use kick,ban,unban,newlink,setphoto,setname,lock,unlock,set rules,set about and settings commands
-
-*Only admins and sudo can use res, setowner, commands
-]],
-    help_text = [[
-Commands list :
-❗.️id ( هم یوزر نیم و هم ایدی عددی شخص)
-
-!kick (reply) [ @username|id]  حذف شخص با ریپلی و ایدی
-
-!ban (reply) [ @username|id] مسدود کردن با ریپلی و ایدی
-
-!unban (reply) [id] صلب مسدودیت فرد مسدود شده
-
-!who ارائه مشخصات افراد در گروه
-
-!modlist فهرست مدیران
-
-!promote   [ @username ] برای برگذیدن مدیریت گروه
-
-!demote (reply) [username] صلب از مدیریت یه شخص
-
-!kickme برای حذف خود از گروه
-
-!about معرفی گروه
-
-!setphoto گذاشتن عکس برای گروه
-
-!setname [name] گذاشتن اسم برای گروه
-
-!rules قوانین 
-
-!id (reply) ایدی عددی گروه و باریپلی روی فردی ایدی عددی فرد 
-
-!lock [member|name|bots|leave] محدود کردن هر یک
-
-!unlock [member|name|bots|leave] لغو مخدودیت هر یک
-
-!set rules <text> گذاشتن قوانین
-
-!set about <text> گذاشتن معرف گروه
-
-!settings تنظیمات گروه
-
-!newlink نشاندن لینک جدید 
-
-!link اخذ لینک مربوط به گروه
-
-!owner دانستن صاحب گروه
-
-!setflood [value] تنظیم حساسیت ربات به تعداد
-پیام ها
-!stats مشخصات کلی
-
-!save [value] <text> ذخیره کردن متن در ربات
-
-!get [value] گرفتن متن ذخیره شده
-
-!clean [modlist|rules|about] پاک کردن هر یک
-
-!res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
-
-!log امار
-
-!banlist فهرست افراد مسدود شده
-قبل از دادن دستور حتما از / یا ! استفاده کنید
-
-]]
+    help_text_realm = [[]],
+    help_text = [[]]
   }
   serialize_to_file(config, './data/config.lua')
   print('saved config into ./data/config.lua')
