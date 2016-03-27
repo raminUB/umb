@@ -1,31 +1,33 @@
-
+--help v1.2
 local function run(msg, matches)
  if matches[1]:lower() == "help" and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and not is_momod(msg) and is_group(msg) then
-         return "Hi member "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+         return "Hi member \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
 !settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
-group id [ایدی گروه] , your id [ایدی شما]-by all
-lock name [قفل اسم گروه]-by mods
-lock photo [قفل عکس گروه]-by mods 
-lock join [حذف افراد جوین شونده با لینک]-by mods
-lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
-lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
-lock voice [قفل گروه از صداها]-by mods
-lock trash [قفل فحش در گروه]-by mods
-lock emoji [قفل اموجی در گروه]-by mods
-lock film [قفل فیلم در گروه]-by mods
-lock stiker [قفل استیکر در گروه]-by mods
-lock share [قفل اشتراک گذاری شماره]-by mods
-lock english [قفل زبان انگلیسی]-by mods
-lock chat [قفل چت کردن]-by mods
-lock arabic [ قفل زبان عربی و فارسی]-by mods
-lock leave [قفل ترک کردن گروه]-by mods
-lock flood [قفل اسپم در گروه]-by admin
-lock bot [قفل ورود ربات در گروه]-by admin
-group type [نوع گروه]-by bot
-filter word [کلمات بلاک شده در گروه]-by mods
+group id [ایدی گروه]  
+your id [ایدی شما]
+
+!lock name قفل اسم گروه
+!lock image قفل عکس گروه
+!lock join حذف افراد جوین شونده با لینک
+!lock link قفل گروه برای تبلیغ لینک
+!lock tag قفل گروه از تگ کردن افراد با #یا @
+!lock voice قفل گروه از صداها
+!lock trash قفل فحش در گروه
+!lock emoji قفل اموجی در گروه
+!lock film قفل فیلم و گیف در گروه
+!lock stiker قفل استیکر در گروه
+!lock share قفل اشتراک گذاری شماره
+!lock english قفل زبان انگلیسی
+!lock chat قفل چت کردن
+!lock arabic قفل زبان عربی و فارسی
+!lock leave قفل ترک کردن گروه
+!lock flood قفل اسپم در گروه
+!lock bot قفل ورود ربات در گروه
+group type نوع گروه
+filter word کلمات بلاک شده در گروه
 
 !kickme برای حذف خود از گروه
 
@@ -45,45 +47,50 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 !feedback فرستادن نظرات به سودو ربات
 
+!ub معرفی ربات و شناخت سودو ها
+
 [این کیه یا in kie](by reply) مشخص کردن مقام شخص
 
 !info(or by reply)مشخصات
 
-قبل از دادن دستور حتما از / یا ! استفاده کنید
+****قبل از دادن دستور حتما از / یا ! استفاده کنید
+****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
 if matches[1]:lower() == "help"  and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and is_momod(msg) and is_group(msg) then
-return "Hi moderator "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[
+return "Hi moderator \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[
 
 !modlist فهرست مدیران
 
 !settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
+group id [ایدی گروه]  
+your id [ایدی شما]-by all
+
+!lock name قفل اسم گروه
+!lock image قفل عکس گروه
+!lock join حذف افراد جوین شونده با لینک
+!lock link قفل گروه برای تبلیغ لینک
+!lock tag قفل گروه از تگ کردن افراد با #یا @
+!lock voice قفل گروه از صداها
+!lock trash قفل فحش در گروه
+!lock emoji قفل اموجی در گروه
+!lock film قفل فیلم و گیف در گروه
+!lock stiker قفل استیکر در گروه
+!lock share قفل اشتراک گذاری شماره
+!lock english قفل زبان انگلیسی
+!lock chat قفل چت کردن
+!lock arabic قفل زبان عربی و فارسی
+!lock leave قفل ترک کردن گروه
+!lock flood قفل اسپم در گروه
+!lock bot قفل ورود ربات در گروه
+group type نوع گروه
+filter word کلمات بلاک شده در گروه
 
 !kickme برای حذف خود از گروه
 
 !about معرفی گروه
 
 !rules قوانین 
-group id [ایدی گروه] , your id [ایدی شما]-by all
-lock name [قفل اسم گروه]-by mods
-lock photo [قفل عکس گروه]-by mods 
-lock join [حذف افراد جوین شونده با لینک]-by mods
-lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
-lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
-lock voice [قفل گروه از صداها]-by mods
-lock trash [قفل فحش در گروه]-by mods
-lock emoji [قفل اموجی در گروه]-by mods
-lock film [قفل فیلم در گروه]-by mods
-lock stiker [قفل استیکر در گروه]-by mods
-lock share [قفل اشتراک گذاری شماره]-by mods
-lock english [قفل زبان انگلیسی]-by mods
-lock chat [قفل چت کردن]-by mods
-lock arabic [ قفل زبان عربی و فارسی]-by mods
-lock leave [قفل ترک کردن گروه]-by mods
-lock flood [قفل اسپم در گروه]-by admin
-lock bot [قفل ورود ربات در گروه]-by admin
-group type [نوع گروه]-by bot
-filter word [کلمات بلاک شده در گروه]-by mods
 
 !id (reply) ایدی عددی گروه و باریپلی روی فردی ایدی عددی فرد 
 
@@ -93,10 +100,11 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 !feedback ارسال نظر به سودو(ها(
 
+!ub معرفی ربات و شناخت سودو ها
+
 [این کیه یا in kie](by reply) مشخص کردن مقام شخص
 
 !info(or by reply)مشخصات
-
 
 !share شماره ربات
 
@@ -115,11 +123,13 @@ filter word [کلمات بلاک شده در گروه]-by mods
 !about معرفی گروه
 
 !setphoto گذاشتن عکس برای گروه
+
 !setname [name] گذاشتن اسم برای گروه
 
 !unlock [lockname] باز کردن تنظیمات مربوطه
 
 !set rules <text> گذاشتن قوانین
+
 !set about <text> گذاشتن معرف گروه
 
 !newlink نشاندن لینک جدید 
@@ -139,35 +149,38 @@ filter word [کلمات بلاک شده در گروه]-by mods
 !banlist فهرست افراد مسدود شده
 
 !tagall تگ کردن همه افراد گروه
-قبل از دادن دستور حتما از / یا ! استفاده کنید
+****قبل از دادن دستور حتما از / یا ! استفاده کنید
+****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
 if matches[1]:lower() == "help" and not is_sudo(msg) and is_owner(msg) and not is_admin(msg) and is_group(msg) then
-return "Hi owner "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+return "Hi owner \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
 !settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
-group id [ایدی گروه] , your id [ایدی شما]-by all
-lock name [قفل اسم گروه]-by mods
-lock photo [قفل عکس گروه]-by mods 
-lock join [حذف افراد جوین شونده با لینک]-by mods
-lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
-lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
-lock voice [قفل گروه از صداها]-by mods
-lock trash [قفل فحش در گروه]-by mods
-lock emoji [قفل اموجی در گروه]-by mods
-lock film [قفل فیلم در گروه]-by mods
-lock stiker [قفل استیکر در گروه]-by mods
-lock share [قفل اشتراک گذاری شماره]-by mods
-lock english [قفل زبان انگلیسی]-by mods
-lock chat [قفل چت کردن]-by mods
-lock arabic [ قفل زبان عربی و فارسی]-by mods
-lock leave [قفل ترک کردن گروه]-by mods
-lock flood [قفل اسپم در گروه]-by admin
-lock bot [قفل ورود ربات در گروه]-by admin
-group type [نوع گروه]-by bot
-filter word [کلمات بلاک شده در گروه]-by mods
+group id [ایدی گروه]  
+your id [ایدی شما]-by all
+
+!lock name قفل اسم گروه
+!lock image قفل عکس گروه
+!lock join حذف افراد جوین شونده با لینک
+!lock link قفل گروه برای تبلیغ لینک
+!lock tag قفل گروه از تگ کردن افراد با #یا @
+!lock voice قفل گروه از صداها
+!lock trash قفل فحش در گروه
+!lock emoji قفل اموجی در گروه
+!lock film قفل فیلم و گیف در گروه
+!lock stiker قفل استیکر در گروه
+!lock share قفل اشتراک گذاری شماره
+!lock english قفل زبان انگلیسی
+!lock chat قفل چت کردن
+!lock arabic قفل زبان عربی و فارسی
+!lock leave قفل ترک کردن گروه
+!lock flood قفل اسپم در گروه
+!lock bot قفل ورود ربات در گروه
+group type نوع گروه
+filter word کلمات بلاک شده در گروه
 
 !kickme برای حذف خود از گروه
 
@@ -182,6 +195,8 @@ filter word [کلمات بلاک شده در گروه]-by mods
 !res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
 
 !feedback ارسال نظر به سودو(ها( 
+
+!ub معرفی ربات و شناخت سودو ها
 
 [این کیه یا in kie](by reply) مشخص کردن مقام شخص
 
@@ -237,35 +252,38 @@ filter word [کلمات بلاک شده در گروه]-by mods
 
 !yesall برای فعالکردن تمام قفل ها
 
-قبل از دادن دستور حتما از / یا ! استفاده کنید
+****قبل از دادن دستور حتما از / یا ! استفاده کنید
+****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
 if matches[1]:lower() == "help" and is_admin(msg) and not is_sudo(msg)  and is_group(msg) then
-return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+return "Hi Mr admin \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
 !settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
-group id [ایدی گروه] , your id [ایدی شما]-by all
-lock name [قفل اسم گروه]-by mods
-lock photo [قفل عکس گروه]-by mods 
-lock join [حذف افراد جوین شونده با لینک]-by mods
-lock ads(link) [قفل گروه برای تبلیغ لینک]-by mods
-lock ads(tag) [قفل گروه از تگ کردن افراد با #یا @]-by mods
-lock voice [قفل گروه از صداها]-by mods
-lock trash [قفل فحش در گروه]-by mods
-lock emoji [قفل اموجی در گروه]-by mods
-lock film [قفل فیلم در گروه]-by mods
-lock stiker [قفل استیکر در گروه]-by mods
-lock share [قفل اشتراک گذاری شماره]-by mods
-lock english [قفل زبان انگلیسی]-by mods
-lock chat [قفل چت کردن]-by mods
-lock arabic [ قفل زبان عربی و فارسی]-by mods
-lock leave [قفل ترک کردن گروه]-by mods
-lock flood [قفل اسپم در گروه]-by admin
-lock bot [قفل ورود ربات در گروه]-by admin
-group type [نوع گروه]-by bot
-filter word [کلمات بلاک شده در گروه]-by mods
+group id [ایدی گروه]  
+your id [ایدی شما]-by all
+
+!lock name قفل اسم گروه
+!lock image قفل عکس گروه
+!lock join حذف افراد جوین شونده با لینک
+!lock link قفل گروه برای تبلیغ لینک
+!lock tag قفل گروه از تگ کردن افراد با #یا @
+!lock voice قفل گروه از صداها
+!lock trash قفل فحش در گروه
+!lock emoji قفل اموجی در گروه
+!lock film قفل فیلم و گیف در گروه
+!lock stiker قفل استیکر در گروه
+!lock share قفل اشتراک گذاری شماره
+!lock english قفل زبان انگلیسی
+!lock chat قفل چت کردن
+!lock arabic قفل زبان عربی و فارسی
+!lock leave قفل ترک کردن گروه
+!lock flood قفل اسپم در گروه
+!lock bot قفل ورود ربات در گروه
+group type نوع گروه
+filter word کلمات بلاک شده در گروه
 
 !kickme برای حذف خود از گروه
 
@@ -282,6 +300,8 @@ filter word [کلمات بلاک شده در گروه]-by mods
 !feedback ارسال نظر به سودو(ها(
 
 !feedback ارسال نظر به سودو(ها( 
+
+!ub معرفی ربات و شناخت سودو ها 
 
 [این کیه یا in kie](by reply) مشخص کردن مقام شخص
 
@@ -336,11 +356,14 @@ filter word [کلمات بلاک شده در گروه]-by mods
 !banall [ @username|id|reply] برای مسدود سازی جهانی افراد
 
 !unbanall [ @username|id|reply]رفع مسدودیت جهانی
-قبل از دادن دستور حتما از / یا ! استفاده کنید
+
+****قبل از دادن دستور حتما از / یا ! استفاده کنید
+****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
  if matches[1]:lower() == "help" and is_admin(msg) and is_realm(msg) then
-         return "Hi Mr admin "..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی )
+  return "Hi \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[Help #2
+!id  ( هم یوزر نیم و هم ایدی عددی )
 
 !creategroup [Name]
 Create a group
@@ -404,9 +427,115 @@ This command will send text to [group_id]
 *Only admins and sudo can use res, setowner, commands
 
 ]]
+end
+if matches[1]:lower() == "help" and is_admin(msg) and is_realm(msg) then
+return "Hi \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[Help #1
+!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+
+!modlist فهرست مدیران
+
+!settings برای یافتن ایدی خود و ایدی گروه و تنظیمات و کلمات محدودی
+group id [ایدی گروه]  
+your id [ایدی شما]-by all
+
+!lock name قفل اسم گروه
+!lock image قفل عکس گروه
+!lock join حذف افراد جوین شونده با لینک
+!lock link قفل گروه برای تبلیغ لینک
+!lock tag قفل گروه از تگ کردن افراد با #یا @
+!lock voice قفل گروه از صداها
+!lock trash قفل فحش در گروه
+!lock emoji قفل اموجی در گروه
+!lock film قفل فیلم و گیف در گروه
+!lock stiker قفل استیکر در گروه
+!lock share قفل اشتراک گذاری شماره
+!lock english قفل زبان انگلیسی
+!lock chat قفل چت کردن
+!lock arabic قفل زبان عربی و فارسی
+!lock leave قفل ترک کردن گروه
+!lock flood قفل اسپم در گروه
+!lock bot قفل ورود ربات در گروه
+group type نوع گروه
+filter word کلمات بلاک شده در گروه
+
+!kickme برای حذف خود از گروه
+
+!about معرفی گروه
+
+!rules قوانین 
+
+!id (reply) ایدی عددی گروه و باریپلی روی فردی ایدی عددی فرد 
+
+!owner دانستن صاحب گروه
+
+!res [ @usermame ] گرفتن ایدی عددی فرد یا یوزر
+
+!feedback ارسال نظر به سودو(ها(
+
+!feedback ارسال نظر به سودو(ها( 
+
+!ub معرفی ربات و شناخت سودو ها 
+
+[این کیه یا in kie](by reply) مشخص کردن مقام شخص
+
+!tagall تگ کردن همه افراد گروه
+
+!info(or by reply)مشخصات
+
+!share شماره ربات
+
+!kick (reply) [ @username|id]  حذف شخص با ریپلی و ایدی
+
+!ban (reply) [ @username|id] مسدود کردن با ریپلی و ایدی
+
+!unban (reply) [id] صلب مسدودیت فرد مسدود شده
+
+!who ارائه مشخصات افراد در گروه
+
+!promote   [ @username ] برای برگذیدن مدیریت گروه
+
+!demote (reply) [username] صلب از مدیریت یه شخص
+
+!about معرفی گروه
+
+!setphoto گذاشتن عکس برای گروه
+
+!setname [name] گذاشتن اسم برای گروه
+
+!unlock [member|name|bots|leave,...] لغو محدودیت هر یک
+
+!set rules <text> گذاشتن قوانین
+
+!set about <text> گذاشتن معرف گروه
+
+!newlink نشاندن لینک جدید 
+
+!link اخذ لینک مربوط به گروه
+
+!setflood [value] تنظیم حساسیت ربات به تعداد پیام ها
+
+!stats مشخصات کلی
+
+!save [value] <text> ذخیره کردن متن در ربات
+
+!get [value] گرفتن متن ذخیره شده
+
+!log امار
+
+!banlist فهرست افراد مسدود شده
+
+!clean [modlist|rules|about] پاک کردن هر یک
+
+!banall [ @username|id|reply] برای مسدود سازی جهانی افراد
+
+!unbanall [ @username|id|reply]رفع مسدودیت جهانی
+
+****قبل از دادن دستور حتما از / یا ! استفاده کنید
+****برای راهنمایی بیشتر به @ub_ch مراجعه شود
+]]
 end 
 if matches[1]:lower() == "help" and is_sudo(msg) then
-         return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nYou do not need my help".."\nGood luck :D"
+         return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nTo view the help you need to see #REALM group".."\nGood luck :D"
  end
 end
  return {
@@ -417,6 +546,5 @@ end
         "^[Hh]elp$"
 },
 	run = run,
-     --privileged = true,
 	pre_process = pre_process
 }
