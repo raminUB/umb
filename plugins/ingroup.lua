@@ -133,6 +133,7 @@ function check_member_group(cb_extra, success, result)
         save_data(_config.moderation.data, data)
       end
       data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
+      data[tostring(msg.to.id)]['set_owner'] = nil
       save_data(_config.moderation.data, data)
       return send_large_msg(receiver, 'You have been promoted as the owner.')
     end
@@ -180,6 +181,7 @@ local function check_member_modadd(cb_extra, success, result)
         save_data(_config.moderation.data, data)
       end
       data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
+      data[tostring(msg.to.id)]['set_owner'] = nil
       save_data(_config.moderation.data, data)
       return send_large_msg(get_receiver(msg), "@" .. msg.from.username .. " have been promoted as the owner ")
     end
@@ -1569,8 +1571,6 @@ local function run(msg, matches)
      lock_group_ax(msg, data, target),
      lock_group_gif(msg, data, target),
      lock_group_en(msg, data, target),
-     lock_group_chat(msg, data, target),
-     lock_group_audio(msg, data, target),
      lock_group_adslink(msg, data, target),
      lock_group_join(msg, data, target),
      lock_group_membermod(msg, data, target),
@@ -1684,7 +1684,6 @@ local function run(msg, matches)
       unlock_group_gif(msg, data, target),
       unlock_group_en(msg, data, target),
       unlock_group_chat(msg, data, target),
-      unlock_group_audio(msg, data, target),
       unlock_group_adslink(msg, data, target),
       unlock_group_join(msg, data, target),
       unlock_group_membermod(msg, data, target),
@@ -1748,7 +1747,7 @@ local function run(msg, matches)
     if matches[1] == 'owner' then
       local group_owner = data[tostring(msg.to.id)]['set_owner']
       if not group_owner then 
-        return "no owner,ask admins in support groups to set owner for your group"
+        return "no owner,ask admins in support groups to set owner for your group or ask to @ub_sup_bot"
       end
       savelog(msg.to.id, name_log.." ["..msg.from.id.."] used /owner")
       return "Group owner is ["..group_owner..']'
