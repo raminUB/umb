@@ -1744,6 +1744,23 @@ local function run(msg, matches)
           msgr = get_message(msg.reply_id, setowner_by_reply, false)
       end
     end
+    if matches[1]:lower() == 'deleteowner' then
+    if not is_admin(msg) then
+       return "only for admin"
+     end
+    if matches[1]:lower() == 'deleteowner' and is_admin(msg) then
+         local groups = 'groups'
+      if not data[tostring(groups)] then
+        data[tostring(groups)] = {}
+        save_data(_config.moderation.data, data)
+      end
+        data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
+        data[tostring(msg.to.id)]['set_owner'] = nil
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] revious Avner was taken ownership")
+        save_data(_config.moderation.data, data)
+        return "No ownership group"
+   end
+end
     if matches[1] == 'owner' then
       local group_owner = data[tostring(msg.to.id)]['set_owner']
       if not group_owner then 
@@ -1917,6 +1934,7 @@ return {
   "^[!/](newlink)$",
   "^[!/](linkpv)$",
   "^[!/](link)$",
+  "^[!/](deleteowner)$,
   "^[!/](kickinactive)$",
   "^[!/](kickinactive) (%d+)$",
   "%[(photo)%]",
