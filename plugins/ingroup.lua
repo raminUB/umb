@@ -1869,6 +1869,18 @@ local function run(msg, matches)
 	    local chat_id = msg.to.id
 	    local receiver = get_receiver(msg)
       return kick_inactive(chat_id, num, receiver)
+      end
+    if matches[1] == 'linkpv' then
+      if not is_momod(msg) then
+        return "For mods only!"
+      end
+      local group_link = data[tostring(msg.to.id)]['settings']['set_link']
+      if not group_link then 
+        return "No link Found!\nFirst Create /newlink then send /linkpv"
+      end
+       savelog(msg.to.id, name_log.." ["..msg.from.id.."] requested group link ["..group_link.."]")
+     send_large_msg('user#id'..msg.from.id, "Group link for ("..string.gsub(msg.to.print_name, "_", " ").."):\n"..group_link)
+      return send_large_msg(receiver, 'Link send To your Private !\n(before that,you must first save my number!)\nFor get my phone, sned /share and save!')
     end
   end 
 end
@@ -1904,6 +1916,7 @@ return {
 -- "^[!/](public) (.*)$",
   "^[!/](modlist)$",
   "^[!/](newlink)$",
+  "^[!/](linkpv)$",
   "^[!/](link)$",
   "^[!/](kickinactive)$",
   "^[!/](kickinactive) (%d+)$",
