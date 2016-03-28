@@ -1940,6 +1940,7 @@ return {
   "^[!/](kill) (realm)$",
   "^[!/](demote) (.*)$",
   "^[!/](demote)",
+  "^(demoteme)",
   "^[!/](set) ([^%s]+) (.*)$",
   "^[!/](lock) (.*)$",
   "^[!/](setowner) (%d+)$",
