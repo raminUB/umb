@@ -1744,23 +1744,44 @@ local function run(msg, matches)
           msgr = get_message(msg.reply_id, setowner_by_reply, false)
       end
     end
-    if matches[1]:lower() == 'deleteowner' then
-    if not is_admin(msg) then
-       return "only for admin"
+      if matches[1]:lower() == 'deleteowner' then
+      if not is_admin(msg) then
+      return "only for admin"
      end
-    if matches[1]:lower() == 'deleteowner' and is_admin(msg) then
-         local groups = 'groups'
+      if matches[1]:lower() == 'deleteowner' and is_admin(msg) then
+      local data = load_data(_config.moderation.data)
+      local groups = 'groups'
+      if data[tostring(msg.to.id)]['set_owner'] == nil then
+      return 'No owner in this group.'
+     end
       if not data[tostring(groups)] then
         data[tostring(groups)] = {}
         save_data(_config.moderation.data, data)
-      end
+     end
         data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
         data[tostring(msg.to.id)]['set_owner'] = nil
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] revious Avner was taken ownership")
         save_data(_config.moderation.data, data)
         return "No ownership group"
+     end
    end
-end
+      if matches[1]:lower() == 'demoteme' then
+      if not is_owner(msg) or is_admin(msg) or is_sudo(msg) then
+      return "for owner only"
+     end
+      if matches[1]:lower() == 'demoteme' and is_owner(msg) and not is_admin(msg) and not is_sudo(msg) then
+      local groups = 'groups'
+      if not data[tostring(groups)] then
+        data[tostring(groups)] = {}
+        save_data(_config.moderation.data, data)
+    end
+        data[tostring(groups)][tostring(msg.to.id)] = msg.to.id
+        data[tostring(msg.to.id)]['set_owner'] = nil
+        savelog(msg.to.id, name_log.." ["..msg.from.id.."] dismissal question of the ownership group")
+        save_data(_config.moderation.data, data)
+        return "You removed the group ownership severe"
+    end
+  end
     if matches[1] == 'owner' then
       local group_owner = data[tostring(msg.to.id)]['set_owner']
       if not group_owner then 
