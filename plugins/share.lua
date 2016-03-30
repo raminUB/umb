@@ -7,7 +7,14 @@ end
 
 return {
 patterns = {
-"^!ub$"
+"^!ub$",
+"^/ub$,
+"^share$,
+"^/share$,
+"^!share$,
+"^number$,
+"^!number$,
+"^/number$
 
 },
 run = run
