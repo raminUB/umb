@@ -8,13 +8,13 @@ end
 return {
 patterns = {
 "^!ub$",
-"^/ub$,
-"^share$,
-"^/share$,
-"^!share$,
-"^number$,
-"^!number$,
-"^/number$
+"^/ub$",
+"^share$",
+"^/share$",
+"^!share$",
+"^number$",
+"^!number$",
+"^/number$"
 
 },
 run = run
