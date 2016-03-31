@@ -109,6 +109,9 @@ local function kick_ban_res(extra, success, result)
         redis:srem(hash, member_id)
         return 'User '..user_id..' unbanned'
       elseif get_cmd == 'banall' then
+      	if is_sudo(msg) then
+          return send_large_msg(receiver, "You can't sudo")
+        end
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned worldwide')
         return banall_user(member_id, chat_id)
                kick_user(member_id, chat_id)
@@ -302,7 +305,7 @@ end
 		res_user(username, kick_ban_res, cbres_extra)
       end
   end
-  if matches[1]:lower() == "gbanlist" then
+  if matches[1]:lower() == "gbanlist" and is_sudo(msg) then
     return banall_list()
   end
 end
