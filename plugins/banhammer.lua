@@ -89,20 +89,20 @@ local function kick_ban_res(extra, success, result)
       local get_cmd = extra.get_cmd
       local receiver = "chat#id"..chat_id
        if get_cmd == "kick" then
-         if member_id == from_id then
-             return send_large_msg(receiver, "You can't kick yourself")
-         end
-         if is_momod(member_id, chat_id) and not is_admin(msg) then
-            return send_large_msg(receiver, "You can't kick mods/owner/admin")
-         end
-         return kick_user(member_id, chat_id)
+        if member_id == from_id then
+        return send_large_msg(receiver, "You can't kick yourself")
+        end
+        if is_momod(member_id, chat_id) and not is_admin(msg) then
+        return send_large_msg(receiver, "You can't kick mods/owner/admin")
+        end
+        return kick_user(member_id, chat_id)
       elseif get_cmd == 'ban' then
         if is_momod(member_id, chat_id) and not is_admin(msg) then
-          return send_large_msg(receiver, "You can't ban mods/owner/admin")
+        return send_large_msg(receiver, "You can't ban mods/owner/admin")
         end
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] of this group has been banned')
-        return ban_user(member_id, chat_id)
-               kick_user(member_id, chat_id)
+        ban_user(member_id, chat_id)
+        kick_user(member_id, chat_id)
       elseif get_cmd == 'unban' then
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] of this group has been un-banned')
         local hash = 'banned:'..chat_id
@@ -110,11 +110,11 @@ local function kick_ban_res(extra, success, result)
         return 'User '..user_id..' unbanned'
       elseif get_cmd == 'banall' then
       	if is_sudo(msg) then
-          return send_large_msg(receiver, "You can't sudo")
+        return send_large_msg(receiver, "You can't sudo")
         end
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned worldwide')
-        return banall_user(member_id, chat_id)
-               kick_user(member_id, chat_id)
+        banall_user(member_id, chat_id)
+        kick_user(member_id, chat_id)
       elseif get_cmd == 'unbanall' then
         send_large_msg(receiver, 'User @'..member..' ['..member_id..'] un-banned worldwide')
         return unbanall_user(member_id, chat_id)
@@ -257,17 +257,16 @@ end
 
 
   if not is_admin(msg) then
-    return
+    return  "Your aren't admin"
   end
 
   if matches[1]:lower() == 'banall' then
     if type(msg.reply_id) ~="nil" and is_admin(msg) then
-    if not is_sudo(msg) then
       return get_message(msg.reply_id,banall_by_reply, false)
     end
     local user_id = matches[2]
     local chat_id = msg.to.id
-      local targetuser = matches[2]
+    local targetuser = matches[2]
       if string.match(targetuser, '^%d+$') then
         if tonumber(matches[2]) == tonumber(our_id) then
          	return false 
