@@ -8,7 +8,7 @@ local function save_filter(msg, name, value)
 	end
 	if hash then
 		redis:hset(hash, name, value)
-	return "Word blocked on "  ..string.gsub(msg.to.print_name, "_", " ")
+	return "Word un-blocked/blocked on "  ..string.gsub(msg.to.print_name, "_", " ")
 	end
 end
 
@@ -51,9 +51,9 @@ local function get_filter_act(msg, var_name)
 	if hash then
 		local value = redis:hget(hash, var_name)
 		if value == 'msg' then
-			return 'danger!'
+			return 'danger'
 		elseif value == 'kick' then
-			return 'kick!'
+			return 'kick'
 		elseif value == 'none' then
 			return 'not block this word!'
 		end
