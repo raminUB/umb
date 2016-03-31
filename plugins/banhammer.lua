@@ -92,18 +92,18 @@ local function kick_ban_res(extra, success, result)
          if member_id == from_id then
              return send_large_msg(receiver, "You can't kick yourself")
          end
-         if is_momod2(member_id, chat_id) and not is_admin2(sender) then
-            return send_large_msg(receiver, "You can't kick mods/owner/admins")
+         if is_momod(member_id, chat_id) and not is_admin(msg) then
+            return send_large_msg(receiver, "You can't kick mods/owner/admin")
          end
          return kick_user(member_id, chat_id)
       elseif get_cmd == 'ban' then
-        if is_momod2(member_id, chat_id) and not is_admin2(sender) then
-          return send_large_msg(receiver, "You can't ban mods/owner/admins")
+        if is_momod(member_id, chat_id) and not is_admin(msg) then
+          return send_large_msg(receiver, "You can't ban mods/owner/admin")
         end
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] of this group has been banned')
         return ban_user(member_id, chat_id)
       elseif get_cmd == 'unban' then
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] unbanned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] of this group has been un-banned')
         local hash =  'banned:'..chat_id
         redis:srem(hash, member_id)
         return 'User '..user_id..' unbanned'
