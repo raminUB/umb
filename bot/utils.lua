@@ -456,7 +456,7 @@ end
 -- If text is longer than 4096 chars, send multiple msg.
 -- https://core.telegram.org/method/messages.sendMessage
 function send_large_msg_callback(cb_extra, success, result)
-  local text_max = 4096
+  local text_max = 5000
 
   local destination = cb_extra.destination
   local text = cb_extra.text
@@ -467,8 +467,8 @@ function send_large_msg_callback(cb_extra, success, result)
     send_msg(destination, text, ok_cb, false)
   else
 
-    local my_text = string.sub(text, 1, 4096)
-    local rest = string.sub(text, 4096, text_len)
+    local my_text = string.sub(text, 1, 5000)
+    local rest = string.sub(text, 5000, text_len)
 
     local cb_extra = {
       destination = destination,
