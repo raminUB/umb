@@ -810,9 +810,14 @@ function ban_list(chat_id)
   local list = redis:smembers(hash)
   local text = "Ban list !\n\n"
   for k,v in pairs(list) do
-    text = text..k.." - "..v.." \n"
-  end
-  return text
+   local user_info = redis:hgetall('user:'..v)
+		if user_info and user_info.print_name then
+   	text = text..k.." - "..string.gsub(user_info.print_name, "_", " ").." ["..v.."]\n"
+  	else 
+    text = text..k.." - "..v.."\n"
+		end
+	end
+ return text
 end
 
 -- Returns globally ban list
