@@ -108,10 +108,10 @@ local function kick_ban_res(extra, success, result)
         redis:srem(hash, member_id)
         return 'User '..user_id..' unbanned'
       elseif get_cmd == 'banall' then
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] globally banned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] banned worldwide')
         return banall_user(member_id, chat_id)
       elseif get_cmd == 'unbanall' then
-        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] un-globally banned')
+        send_large_msg(receiver, 'User @'..member..' ['..member_id..'] un-banned worldwide')
         return unbanall_user(member_id, chat_id)
       end
 end
@@ -266,7 +266,7 @@ end
          	return false 
         end
         	banall_user(targetuser)
-       		return 'User ['..user_id..' ] globally banned'
+       		return 'User ['..user_id..' ] banned worldwide'
       else
 	local cbres_extra = {
 		chat_id = msg.to.id,
@@ -286,7 +286,7 @@ end
           	return false 
         end
        		unbanall_user(user_id)
-        	return 'User ['..user_id..' ] removed from global ban list'
+        	return 'User ['..user_id..' ] un-banned worldwide'
       else
 	local cbres_extra = {
 		chat_id = msg.to.id,
