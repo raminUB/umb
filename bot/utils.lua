@@ -456,7 +456,7 @@ end
 -- If text is longer than 4096 chars, send multiple msg.
 -- https://core.telegram.org/method/messages.sendMessage
 function send_large_msg_callback(cb_extra, success, result)
-  local text_max = 5000
+  local text_max = 4096
 
   local destination = cb_extra.destination
   local text = cb_extra.text
@@ -467,8 +467,8 @@ function send_large_msg_callback(cb_extra, success, result)
     send_msg(destination, text, ok_cb, false)
   else
 
-    local my_text = string.sub(text, 1, 5000)
-    local rest = string.sub(text, 5000, text_len)
+    local my_text = string.sub(text, 1, 4096)
+    local rest = string.sub(text, 4096, text_len)
 
     local cb_extra = {
       destination = destination,
@@ -747,7 +747,7 @@ function kick_user(user_id, chat_id)
   if tonumber(user_id) == tonumber(our_id) then -- Ignore bot
     return
   end
-  if is_momod(user_id, chat_id) then -- Ignore admins
+  if is_owner2(user_id, chat_id) then -- Ignore admins
     return
   end
   local chat = 'chat#id'..chat_id
@@ -760,7 +760,7 @@ function ban_user(user_id, chat_id)
   if tonumber(user_id) == tonumber(our_id) then -- Ignore bot
     return
   end
-  if is_admin(user_id) then -- Ignore admins
+  if is_admin2(user_id) then -- Ignore admins
     return
   end
   -- Save to redis
@@ -774,7 +774,7 @@ function banall_user(user_id)
   if tonumber(user_id) == tonumber(our_id) then -- Ignore bot
     return
   end
-  if is_admin(user_id) then -- Ignore admins
+  if is_admin2(user_id) then -- Ignore admins
     return
   end
   -- Save to redis
@@ -810,26 +810,21 @@ function ban_list(chat_id)
   local list = redis:smembers(hash)
   local text = "Ban list !\n\n"
   for k,v in pairs(list) do
- 		local user_info = redis:hgetall('user:'..v)
-		if user_info and user_info.print_name then
-   	text = text..k.." <> "..string.gsub(user_info.print_name, "_", " ").." ["..v.."]\n"
-  	else 
-        text = text..k.." <> "..v.."\n"
-		end
-	end
- return text
+    text = text..k.." - "..v.." \n"
+  end
+  return text
 end
 
 -- Returns globally ban list
 function banall_list() 
   local hash =  'gbanned'
   local list = redis:smembers(hash)
-  local text = "banned worldwide \n\n"
+  local text = "global bans !\n\n"
   for k,v in pairs(list) do
-        text = text..k.." <> "..v.."\n"
-	end
-        return text
-      end
+    text = text..k.." - "..v.." \n"
+  end
+  return text
+end
 
 -- /id by reply
 function get_message_callback_id(extra, success, result)
@@ -862,7 +857,7 @@ function Kick_by_reply_admins(extra, success, result)
   if result.to.type == 'chat' then
     local chat = 'chat#id'..result.to.id
     if tonumber(result.from.id) == tonumber(our_id) then -- Ignore bot
-      return 
+      return "I won't kick myself"
     end
     if is_admin2(result.from.id) then -- Ignore admins
       return
@@ -878,9 +873,9 @@ function ban_by_reply(extra, success, result)
   if result.to.type == 'chat' then
   local chat = 'chat#id'..result.to.id
   if tonumber(result.from.id) == tonumber(our_id) then -- Ignore bot
-      return 
+      return "I won't ban myself"
   end
-  if is_momod2(result.from.id, result.to.id) then
+  if is_momod2(result.from.id, result.to.id) then -- Ignore mods,owner,admin
     return "you can't kick mods,owner and admins"
   end
   ban_user(result.from.id, result.to.id)
@@ -895,7 +890,7 @@ function ban_by_reply_admins(extra, success, result)
   if result.to.type == 'chat' then
     local chat = 'chat#id'..result.to.id
     if tonumber(result.from.id) == tonumber(our_id) then -- Ignore bot
-      return 
+      return "I won't ban myself"
     end
     if is_admin2(result.from.id) then -- Ignore admins
       return
@@ -912,7 +907,7 @@ function unban_by_reply(extra, success, result)
   if result.to.type == 'chat' then
     local chat = 'chat#id'..result.to.id
     if tonumber(result.from.id) == tonumber(our_id) then -- Ignore bot
-      return 
+      return "I won't unban myself"
     end
     send_large_msg(chat, "User "..result.from.id.." Unbanned")
     -- Save on redis
@@ -928,13 +923,13 @@ function banall_by_reply(extra, success, result)
     if tonumber(result.from.id) == tonumber(our_id) then -- Ignore bot
       return "I won't banall myself"
     end
-    if is_admin(result.from.id) or is_sudo(result.from.id) then -- Ignore admins
+    if is_admin2(result.from.id) then -- Ignore admins
       return 
     end
     local name = user_print_name(result.from)
     banall_user(result.from.id)
     chat_del_user(chat, 'user#id'..result.from.id, ok_cb, false)
-    send_large_msg(chat, "User ".."[ @"..result.from.username.." "..result.from.id.."] banned worldwide")
+    send_large_msg(chat, "User "..name.."["..result.from.id.."] hammered")
   else
     return 'Use This in Your Groups'
   end
