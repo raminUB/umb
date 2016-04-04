@@ -368,6 +368,7 @@ local function set_descriptionmod(msg, data, target, about)
   return 'Set group description to:\n'..about
 end
 local function get_description(msg, data)
+local data_cat = 'description'
   if not data[tostring(msg.to.id)][data_cat] then
     return 'No description available.'
   end
