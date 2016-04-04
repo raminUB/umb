@@ -2,14 +2,15 @@
 local function tagall(cb_extra, success, result)
     local receiver = cb_extra.receiver
     local chat_id = "chat#id"..result.id
-    local text = 'UB team \n'
-    local i = 0 + 1
+    local text = '@UB_CH \n'
+    local i = 1
     for k,v in pairs(result.members) do
         if v.username then
-			text = text..i.."👤 @"..v.username.."\n"
+        text = text..i.."👤 @"..v.username.."\n"
+        i = i + 1
 		end
     end
-	text = text.."~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n".."\n"..cb_extra.msg_text
+	text = text.."~~~~~~~~~~~~~~~~~~~~~~~~~~~\n".."\nText messaging : "..cb_extra.msg_text
 	send_large_msg(receiver, text)
 end
 local function run(msg, matches)
