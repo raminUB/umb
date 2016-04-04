@@ -1134,17 +1134,19 @@ end
 local function callbackres(extra, success, result) -- Callback for res_user in line 27
   local user = result.id
   local chat = 'chat#id'..extra.chatid
-        if is_banned(result.id, extra.chatid) then -- Ignore bans
+        if is_banned(result.id, extra.chatid) and not is_gbanned(result.id) then -- Ignore bans
         send_large_msg(chat, user..'\nprohibit : banned')
-        elseif is_gbanned(result.id) then
-             send_large_msg(chat, user..'\nprohibit : globaly banned')
+        elseif is_gbanned(result.id) and not is_banned(result.id, extra.chatid) then
+        send_large_msg(chat, user..'\nprohibit : globaly banned')
+        elseif is_banned(result.id, extra.chatid) and is_gbanned(result.id, extra.chatid)  then
+        send_large_msg(chat, user..'\nprohibit : banned and globaly banned !!')
         elseif not is_gbanned(result.id) then
-             send_large_msg(chat, user..'\nprohibit : not inhibitory')
+        send_large_msg(chat, user..'\nprohibit : not inhibitory')
         elseif not is_banned(result.id, extra.chatid) then
-             send_large_msg(chat, user..'\nprohibit : not inhibitory')
+        send_large_msg(chat, user..'\nprohibit : not inhibitory')
+                end
         end
-end
-
+        
 local function help()
   local help_text = tostring(_config.help_text)
   return 
