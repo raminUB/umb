@@ -74,7 +74,7 @@ end
 local function reload_plugins( )
   plugins = {}
   load_plugins()
-  return list_plugins(true)
+  return "Reloaded !"
 end
 
 
