@@ -77,7 +77,6 @@ local function pre_process(msg)
       end
       kick_user(user, chat)
       send_large_msg(get_receiver(msg), "User @" .. msg.from.username .. " don't spamming!")
-      kick_user(user, chat)
       local name = user_print_name(msg.from)
       --save it to log file
       savelog(msg.to.id, name.." ["..msg.from.id.."] spammed and kicked ! ")
