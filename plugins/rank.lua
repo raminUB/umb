@@ -1,10 +1,10 @@
 do		
- local Executive1 = 140925196 --put your id here(BOT OWNER ID)
- 		
+ local Executive1 = 140925196
+ 
  local function setrank(msg, name, value) -- setrank function		
    local hash = nil		
    if msg.to.type == 'chat' then		
-     hash = 'rank:'..msg.to.id..':variables'		
+     hash = 'rank:variables'		
    end		
    if hash then		
      redis:hset(hash, name, value)		
@@ -23,17 +23,17 @@ do
      local text = '1-Full name : '..(result.first_name or '')..' '..(result.last_name or '')..'\n'		
                 ..'2-User name: '..Username..'\n'		
                 ..'3-ID : '..result.id..'\n'		
-  	local hash = 'rank:'..extra.chat2..':variables'		
+  	local hash = 'rank:variables'		
   	local value = redis:hget(hash, result.id)		
      if not value then		
   	   if is_admin2(result.id) then		
   	   text = text..'4-Rank : Admin \n'		
     elseif is_owner2(result.id, extra.chat2) then		
     text = text..'4-Rank : Owner \n'		
-   elseif is_momod2(result.id, extra.chat2) then		
+    elseif is_momod2(result.id, extra.chat2) then		
     text = text..'4-Rank : Moderator \n'		
        else		
-   text = text..'4-Rank : Member \n'		
+    text = text..'4-Rank : Member \n'		
   end		
     else		
     text = text..'4-Rank : '..value..'\n'		
@@ -59,11 +59,11 @@ do
    text = text..'@UB_CH'		
    send_msg(extra.receiver, text, ok_cb,  true)		
    else		
- 	send_msg(extra.receiver, ' Username not found.', ok_cb, false)		
+  	send_msg(extra.receiver, ' Username not found.', ok_cb, false)		
    end		
  end		
  		
-  local function action_by_id(extra, success, result)  -- /info <ID> function		
+  local function action_by_id(extra, success, result) 
   if success == 1 then		
   if result.username then		
     Username = '@'..result.username		
@@ -73,7 +73,7 @@ do
     local text = '1-Full name : '..(result.first_name or '')..' '..(result.last_name or '')..'\n'		
                 ..'2-Username: '..Username..'\n'		
                 ..'3-ID : '..result.id..'\n'		
-   local hash = 'rank:'..extra.chat2..':variables'		
+   local hash = 'rank:variables'		
    local value = redis:hget(hash, result.id)		
    if not value then		
  	  if is_admin2(result.id) then		
@@ -122,7 +122,7 @@ do
    local text = '1-Full name : '..(result.from.first_name or '')..' '..(result.from.last_name or '')..'\n'		
                 ..'2-Username : '..Username..'\n'		
                 ..'3-ID : '..result.from.id..'\n'		
- 	local hash = 'rank:'..result.to.id..':variables'		
+ 	local hash = 'rank:variables'		
  		local value = redis:hget(hash, result.from.id)		
  		 if not value then		
  		     if is_admin2(result.from.id) then		
@@ -170,7 +170,7 @@ do
   if matches[1]:lower() == 'setrank' then		
    local hash = 'usecommands:'..msg.from.id..':'..msg.to.id		
    redis:incr(hash)		
-   if not is_momod(msg) then		
+   if not is_sudo(msg) then		
      return "Only for Sudo"		
    end		
    local receiver = get_receiver(msg)		
@@ -240,7 +240,7 @@ do
  	 text = text..'Group name : '..msg.to.title..'\n'		
       text = text..'Group ID : '..msg.to.id		
      end		
-     text = text..'\niDetergent'		
+     text = text..'\n@UB_CH'		
      return send_msg(receiver, text, ok_cb, true)		
      end		
    end		
