@@ -1749,13 +1749,13 @@ local function run(msg, matches)
     end
       if matches[1]:lower() == 'deleteowner' then
       if not is_admin(msg) then
-      return "only for admin"
+      return "only for admin/sudo"
      end
       if matches[1]:lower() == 'deleteowner' and is_admin(msg) then
       local data = load_data(_config.moderation.data)
       local groups = 'groups'
       if data[tostring(msg.to.id)]['set_owner'] == nil then
-      return 'No owner in this group.'
+      return 'No owner in this group'
      end
       if not data[tostring(groups)] then
         data[tostring(groups)] = {}
@@ -1765,7 +1765,7 @@ local function run(msg, matches)
         data[tostring(msg.to.id)]['set_owner'] = nil
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] revious Avner was taken ownership")
         save_data(_config.moderation.data, data)
-        return "No ownership group"
+        return "Group owner has been removed"
      end
    end
       if matches[1]:lower() == 'demoteme' then
@@ -1830,14 +1830,14 @@ local function run(msg, matches)
       end
       if matches[2] == 'modlist' then
         if next(data[tostring(msg.to.id)]['moderators']) == nil then --fix way
-          return 'No moderator in this group.'
+          return 'No moderator in this group'
         end
         local message = '\nList of moderators for ' .. string.gsub(msg.to.print_name, '_', ' ') .. ':\n'
         for k,v in pairs(data[tostring(msg.to.id)]['moderators']) do
           data[tostring(msg.to.id)]['moderators'][tostring(k)] = nil
-          send_large_msg(get_receiver(msg), "successful!")
           save_data(_config.moderation.data, data)
         end
+        send_large_msg(get_receiver(msg), "successful!")
         savelog(msg.to.id, name_log.." ["..msg.from.id.."] cleaned modlist")
       end
       if matches[2] == 'rules' then 
@@ -1886,7 +1886,7 @@ local function run(msg, matches)
         return
       end
       savelog(msg.to.id, name_log.." ["..msg.from.id.."] Used /help")
-      return help()
+      return 
     end
     if matches[1] == 'res' then 
       local cbres_extra = {
