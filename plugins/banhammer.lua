@@ -53,14 +53,14 @@ local function pre_process(msg)
     end
   end
     -- No further checks
-  return msg
+  return 
   end
   -- banned user is talking !
   if msg.to.type == 'chat' then
     local data = load_data(_config.moderation.data)
     local group = msg.to.id
     local texttext = 'groups'
-    if not data[tostring(texttext)][tostring(msg.to.id)] and not is_sudo(msg) then -- Check if this group is one of my groups or not
+    if not data[tostring(texttext)][tostring(msg.to.id)] and not is_sudo(msg) and not is_realm(msg) then -- Check if this group is one of my groups or not
     chat_del_user('chat#id'..msg.to.id,'user#id'..our_id,ok_cb,false)
     block_user("user#id"..msg.from.id,ok_cb,false)
     return 
@@ -69,7 +69,6 @@ local function pre_process(msg)
     local chat_id = msg.to.id
     local banned = is_banned(user_id, chat_id)
     if banned or is_gbanned(user_id) then
-      print('Banned user talking!')
       local name = user_print_name(msg.from)
       kick_user(user_id, chat_id)
       msg.text = ''
@@ -128,7 +127,7 @@ local function run(msg, matches)
     elseif matches[1]:lower() == 'id' then
       local name = user_print_name(msg.from)
       savelog(msg.to.id, name.." ["..msg.from.id.."] used /id ")
-      return "" ..string.gsub(msg.to.print_name, "_", " ").. "\nId : [ "..msg.to.id.." ] "
+      return "" ..string.gsub(msg.to.print_name, "_", " ").. "\nID : [ "..msg.to.id.." ] "
     end
   end
   if matches[1]:lower() == 'kickme' then-- /kickme
