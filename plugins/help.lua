@@ -150,6 +150,9 @@ filter word کلمات بلاک شده در گروه
 !banlist فهرست افراد مسدود شده
 
 !tagall تگ کردن همه افراد گروه
+
+برای فیلتر کردن کلمه ای filter + [کلمه]
+
 ****قبل از دادن دستور حتما از / یا ! استفاده کنید
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
@@ -253,6 +256,8 @@ filter word کلمات بلاک شده در گروه
 !unlock all برای غیر فعال کردن تمام قفل ها
 
 !lock all برای فعالکردن تمام قفل ها
+
+برای فیلتر کردن کلمه ای filter + [کلمه]
 
 ****قبل از دادن دستور حتما از / یا ! استفاده کنید
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
@@ -364,14 +369,15 @@ filter word کلمات بلاک شده در گروه
 
 !lock all برای فعالکردن تمام قفل ها
 
+برای فیلتر کردن کلمه ای filter + [کلمه]
+
 ****قبل از دادن دستور حتما از / یا ! استفاده کنید
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
 
  if matches[1]:lower() == "help" and is_admin(msg) and is_realm(msg) then
-  return "Hi \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[Help #2
-!id  ( هم یوزر نیم و هم ایدی عددی )
+  return "Hi \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[!id  ( هم یوزر نیم و هم ایدی عددی )
 
 !creategroup [Name]
 Create a group
@@ -437,9 +443,8 @@ This command will send text to [group_id]
 ]]
 end
 
-if matches[1]:lower() == "help" and is_admin(msg) and is_realm(msg) then
-return "Hi \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[Help #1
-!id  ( هم یوزر نیم و هم ایدی عددی شخص)
+if matches[1]:lower() == "help" and is_sudo(msg) and is_group(msg) then
+return "Hi Sir \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
 !modlist فهرست مدیران
 
@@ -543,14 +548,12 @@ filter word کلمات بلاک شده در گروه
 
 !lock all برای فعالکردن تمام قفل ها
 
+برای فیلتر کردن کلمه ای filter + [کلمه]
+
 ****قبل از دادن دستور حتما از / یا ! استفاده کنید
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
-
-if matches[1]:lower() == "help" and is_sudo(msg) then
-         return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nTo view the help you need to see #REALM group".."\nGood luck :D"
- end
 end
  return {
 	description = "Chat With Robot Server",
