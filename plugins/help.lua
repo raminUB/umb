@@ -57,6 +57,7 @@ filter word کلمات بلاک شده در گروه
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
+
 if matches[1]:lower() == "help"  and not is_sudo(msg) and not is_owner(msg) and not is_admin(msg) and is_momod(msg) and is_group(msg) then
 return "Hi moderator \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[
 
@@ -153,6 +154,7 @@ filter word کلمات بلاک شده در گروه
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
+
 if matches[1]:lower() == "help" and not is_sudo(msg) and is_owner(msg) and not is_admin(msg) and is_group(msg) then
 return "Hi owner \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
@@ -256,6 +258,7 @@ filter word کلمات بلاک شده در گروه
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
+
 if matches[1]:lower() == "help" and is_admin(msg) and not is_sudo(msg)  and is_group(msg) then
 return "Hi Mr admin \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[!id  ( هم یوزر نیم و هم ایدی عددی شخص)
 
@@ -365,6 +368,7 @@ filter word کلمات بلاک شده در گروه
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
 end
+
  if matches[1]:lower() == "help" and is_admin(msg) and is_realm(msg) then
   return "Hi \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help\n"..[[Help #2
 !id  ( هم یوزر نیم و هم ایدی عددی )
@@ -432,6 +436,7 @@ This command will send text to [group_id]
 
 ]]
 end
+
 if matches[1]:lower() == "help" and is_admin(msg) and is_realm(msg) then
 return "Hi \n"..string.gsub(msg.from.print_name, "_", " ").."\nYou can see help \n"..[[Help #1
 !id  ( هم یوزر نیم و هم ایدی عددی شخص)
@@ -541,7 +546,8 @@ filter word کلمات بلاک شده در گروه
 ****قبل از دادن دستور حتما از / یا ! استفاده کنید
 ****برای راهنمایی بیشتر به @ub_ch مراجعه شود
 ]]
-end 
+end
+
 if matches[1]:lower() == "help" and is_sudo(msg) then
          return "Hi SIR "..string.gsub(msg.from.print_name, "_", " ").."\nTo view the help you need to see #REALM group".."\nGood luck :D"
  end
