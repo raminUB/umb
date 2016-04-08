@@ -9,26 +9,12 @@ local function run(msg, matches)
 group id [ایدی گروه]  
 your id [ایدی شما]
 
-!lock name قفل اسم گروه
-!lock image قفل عکس گروه
-!lock join حذف افراد جوین شونده با لینک
-!lock link قفل گروه برای تبلیغ لینک
-!lock tag قفل گروه از تگ کردن افراد با #یا @
-!lock voice قفل گروه از صداها
-!lock trash قفل فحش در گروه
-!lock emoji قفل اموجی در گروه
-!lock film قفل فیلم و گیف در گروه
-!lock stiker قفل استیکر در گروه
-!lock share قفل اشتراک گذاری شماره
-!lock english قفل زبان انگلیسی
-!lock chat قفل چت کردن
-!lock arabic قفل زبان عربی و فارسی
-!lock leave قفل ترک کردن گروه
-!lock flood قفل اسپم در گروه
-!lock bot قفل ورود ربات در گروه
-group type نوع گروه
-filter word کلمات بلاک شده در گروه
+settings for in group
 
+group type نوع گروه
+
+filter word کلمات بلاک شده در گروه
+>
 !kickme برای حذف خود از گروه
 
 !about معرفی گروه
