@@ -41,6 +41,7 @@ local function check_member_autorealm(cb_extra, success, result)
         save_data(_config.moderation.data, data)
       end
       data[tostring(realms)][tostring(msg.to.id)] = msg.to.id
+      data[tostring(msg.to.id)]['set_owner'] = nil
       save_data(_config.moderation.data, data)
       return send_large_msg(receiver, 'Welcome to your new realm !')
     end
@@ -86,6 +87,7 @@ local function check_member_realm_add(cb_extra, success, result)
         save_data(_config.moderation.data, data)
       end
       data[tostring(realms)][tostring(msg.to.id)] = msg.to.id
+      data[tostring(msg.to.id)]['set_owner'] = nil
       save_data(_config.moderation.data, data)
       return send_large_msg(receiver, 'Realm has been added!')
     end
