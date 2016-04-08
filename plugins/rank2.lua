@@ -1,19 +1,19 @@
 
 local function action_by_reply(extra, success, result)
-	local hash = 'rank:'..result.to.id..':variables'
+	local hash = 'rank:variables'
 	local text = ''
 		local value = redis:hget(hash, result.from.id)
 		 if not value then
-		    if is_admin2(result.from.id) then
-		       text = text..'باباییم \n\n'
-		     elseif is_admin(result.from.id) then
-		       text = text..'حمال بابایی\n\n'
+		    if result.from.id == tonumber(140925196) then
+		       text = text..'بابایی من\n\n'
+		     elseif is_admin2(result.from.id) then
+		       text = text..' مفت خور(ادمین) \n\n'
 		     elseif is_owner2(result.from.id, result.to.id) then
-		       text = text..'مالک گروهه\n\n'
+		       text = text..' صاحب  این گروه \n\n'
 		     elseif is_momod2(result.from.id, result.to.id) then
-		       text = text..'حمال مالک گروه\n\n'
+		       text = text..'حمال صاحب گروه  \n\n'
 		 else
-		       text = text..'هیچ پخی نیست\n\n'
+		       text = text..' هیچ پخی نیست \n\n'
 			end
 		  else
 		   text = text..''..value..'\n\n'
@@ -38,7 +38,7 @@ return {
   usage = "!echo [whatever]: echoes the msg",
   patterns = {
     "in kie",
-	"این کیه",
-  }, 
+    "این کیه"
+ }, 
   run = run 
 }
